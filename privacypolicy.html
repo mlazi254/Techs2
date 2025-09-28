@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYMOH Privacy Policy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background-color: #007bff;
+            color: white;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header a, .content a {
+            color: #ffd700;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        header a:hover, .content a:hover {
+            text-decoration: underline;
+        }
+
+        .language-selector {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        .language-selector select {
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .content h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #007bff;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+        }
+
+        .content ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .accept-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .accept-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Cookie Consent Popup */
+        .cookie-popup {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            max-width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+        }
+
+        .cookie-popup.show {
+            display: block;
+        }
+
+        .cookie-popup p {
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+
+        .cookie-popup a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .cookie-popup a:hover {
+            text-decoration: underline;
+        }
+
+        .cookie-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .cookie-button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .cookie-button.accept {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .cookie-button.accept:hover {
+            background-color: #0056b3;
+        }
+
+        .cookie-button.decline, .cookie-button.customize {
+            background-color: #ccc;
+            color: #333;
+        }
+
+        .cookie-button.decline:hover, .cookie-button.customize:hover {
+            background-color: #bbb;
+        }
+
+        /* Cookie Customization Modal */
+        .cookie-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cookie-modal.show {
+            display: flex;
+        }
+
+        .cookie-modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .cookie-modal-content h3 {
+            margin-bottom: 15px;
+            color: #007bff;
+        }
+
+        .cookie-modal-content label {
+            display: block;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+
+        .cookie-modal-content input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .cookie-modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        /* Scroll-to-Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: none;
+            z-index: 1000;
+        }
+
+        .scroll-to-top.show {
+            display: block;
+        }
+
+        .scroll-to-top:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f1f1f1;
+            color: #666;
+        }
+
+        .last-updated {
+            font-style: italic;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content h2 {
+                font-size: 1.5em;
+            }
+
+            .accept-button {
+                width: 100%;
+            }
+
+            .cookie-popup {
+                left: 10px;
+                right: 10px;
+                max-width: 100%;
+            }
+
+            .cookie-buttons, .cookie-modal-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .language-selector {
+                position: static;
+                margin: 10px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 data-translate="title"><a href="https://symoh.netlify.app" target="_blank">SYMOH</a> Privacy Policy</h1>
+        <p data-translate="header_subtitle">Learn more about us at <a href="https://symoh.netlify.app" target="_blank">SYMOH</a></p>
+        <div class="language-selector">
+            <select id="languageSelect" onchange="changeLanguage()" aria-label="Select language">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+            </select>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="content">
+            <h2 data-translate="commitment_title">Our Commitment to Your Privacy</h2>
+            <p data-translate="commitment_text">At <a href="https://symoh.netlify.app" target="_blank">SYMOH</a>, we are committed to protecting your privacy and ensuring that your personal information is handled in a safe and responsible manner. This Privacy Policy outlines how we collect, use, and protect your information when you use our services or visit our website at <a href="https://symoh.netlify.app" target="_blank">SYMOH</a>.</p>
+
+            <h2 data-translate="how_we_work_title">How We Work</h2>
+            <p data-translate="how_we_work_text"><a href="https://symoh.netlify.app" target="_blank">SYMOH</a> is dedicated to providing innovative and user-focused solutions. We collect and process personal information to enhance your experience and deliver our services effectively. Below is an overview of how we work:</p>
+            <ul>
+                <li data-translate="data_collection"><strong>Data Collection:</strong> We collect only the information necessary to provide our services, such as your name, email address, and usage data, when you interact with our platform.</li>
+                <li data-translate="data_usage"><strong>Data Usage:</strong> Your information is used to personalize your experience, improve our services, and communicate with you about updates or promotions.</li>
+                <li data-translate="data_protection"><strong>Data Protection:</strong> We implement industry-standard security measures to safeguard your data from unauthorized access or misuse.</li>
+                <li data-translate="third_party_sharing"><strong>Third-Party Sharing:</strong> We do not sell or share your personal information with third parties, except as required by law or to provide our services (e.g., with trusted service providers).</li>
+                <li data-translate="user_control"><strong>User Control:</strong> You have the right to access, update, or delete your personal information. Contact us through our website for assistance.</li>
+            </ul>
+
+            <h2 data-translate="cookie_consent_title">Cookie Consent</h2>
+            <p data-translate="cookie_consent_text">At <a href="https://symoh.netlify.app" target="_blank">SYMOH</a>, we use cookies and similar technologies to enhance your experience on our website. This section explains how we use cookies and how you can manage your preferences.</p>
+            <ul>
+                <li data-translate="what_are_cookies"><strong>What Are Cookies:</strong> Cookies are small text files stored on your device that help us understand how you interact with our website, such as tracking navigation patterns and preferences.</li>
+                <li data-translate="how_we_use_cookies"><strong>How We Use Cookies:</strong> We use cookies to improve website functionality, analyze usage trends, and deliver personalized content. For example, cookies may remember your login details or preferences.</li>
+                <li data-translate="types_of_cookies"><strong>Types of Cookies:</strong>
+                    <ul>
+                        <li data-translate="essential_cookies"><strong>Essential Cookies:</strong> Necessary for the website to function properly.</li>
+                        <li data-translate="analytics_cookies"><strong>Analytics Cookies:</strong> Help us understand how users interact with our site.</li>
+                        <li data-translate="marketing_cookies"><strong>Marketing Cookies:</strong> Used to deliver relevant advertisements.</li>
+                    </ul>
+                </li>
+                <li data-translate="your_choices"> <strong>Your Choices:</strong> You can manage cookie preferences through your browser settings, our cookie settings modal, or by contacting us via <a href="https://symoh.netlify.app" target="_blank">SYMOH</a>. By accepting this policy, you consent to our use of cookies as described.</li>
+            </ul>
+
+            <h2 data-translate="contact_info_title">Contact Information</h2>
+            <p data-translate="contact_info_text">For any questions or concerns about our Privacy Policy or data practices, please contact us:</p>
+            <ul>
+                <li><strong data-translate="email_label">Email:</strong> <a href="mailto:privacy@symoh.net">privacy@symoh.net</a></li>
+                <li><strong data-translate="website_label">Website:</strong> <a href="https://symoh.netlify.app" target="_blank">SYMOH</a></li>
+            </ul>
+
+            <h2 data-translate="your_rights_title">Your Rights</h2>
+            <p data-translate="your_rights_text">We respect your rights to privacy. You may request access to your data, request corrections, or opt out of certain data uses, including cookies. For more details, please visit <a href="https://symoh.netlify.app" target="_blank">SYMOH</a> or contact our support team.</p>
+
+            <h2 data-translate="updates_title">Updates to This Policy</h2>
+            <p data-translate="updates_text">We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. Any updates will be posted on this page, and we encourage you to review it periodically.</p>
+
+            <p class="last-updated" data-translate="last_updated">Last Updated: September 25, 2025</p>
+
+            <button class="accept-button" onclick="acceptPolicy()" aria-label="Accept SYMOH Privacy Policy and Cookies" data-translate="accept_button">Accept Privacy Policy</button>
+        </div>
+    </div>
+
+    <!-- Cookie Consent Popup -->
+    <div class="cookie-popup" id="cookiePopup" role="dialog" aria-labelledby="cookiePopupTitle">
+        <p id="cookiePopupTitle" data-translate="cookie_popup_text">We use cookies to enhance your experience on <a href="https://symoh.netlify.app" target="_blank">SYMOH</a>. By continuing, you agree to our use of cookies as described in our <a href="#">Privacy Policy</a>. You can manage your preferences below or in your browser settings.</p>
+        <div class="cookie-buttons">
+            <button class="cookie-button accept" onclick="acceptCookies()" aria-label="Accept all cookies" data-translate="cookie_accept">Accept</button>
+            <button class="cookie-button customize" onclick="showCookieModal()" aria-label="Customize cookie preferences" data-translate="cookie_customize">Customize</button>
+            <button class="cookie-button decline" onclick="declineCookies()" aria-label="Decline non-essential cookies" data-translate="cookie_decline">Decline</button>
+        </div>
+    </div>
+
+    <!-- Cookie Customization Modal -->
+    <div class="cookie-modal" id="cookieModal" role="dialog" aria-labelledby="cookieModalTitle">
+        <div class="cookie-modal-content">
+            <h3 id="cookieModalTitle" data-translate="cookie_modal_title">Cookie Preferences</h3>
+            <label>
+                <input type="checkbox" checked disabled aria-label="Essential cookies (always required)" data-translate="essential_cookies_label"> Essential Cookies (Required)
+            </label>
+            <label>
+                <input type="checkbox" id="analyticsCookies" aria-label="Enable analytics cookies" data-translate="analytics_cookies_label"> Analytics Cookies
+            </label>
+            <label>
+                <input type="checkbox" id="marketingCookies" aria-label="Enable marketing cookies" data-translate="marketing_cookies_label"> Marketing Cookies
+            </label>
+            <div class="cookie-modal-buttons">
+                <button class="cookie-button accept" onclick="saveCookiePreferences()" aria-label="Save cookie preferences" data-translate="cookie_save">Save</button>
+                <button class="cookie-button decline" onclick="closeCookieModal()" aria-label="Cancel cookie preferences" data-translate="cookie_cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll-to-Top Button -->
+    <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top of page">↑</button>
+
+    <footer>
+        <p data-translate="footer_text">&copy; 2025 <a href="https://symoh.netlify.app" target="_blank">SYMOH</a>. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Translation object
+        const translations = {
+            en: {
+                title: "SYMOH Privacy Policy",
+                header_subtitle: "Learn more about us at SYMOH",
+                commitment_title: "Our Commitment to Your Privacy",
+                commitment_text: "At SYMOH, we are committed to protecting your privacy and ensuring that your personal information is handled in a safe and responsible manner. This Privacy Policy outlines how we collect, use, and protect your information when you use our services or visit our website at SYMOH.",
+                how_we_work_title: "How We Work",
+                how_we_work_text: "SYMOH is dedicated to providing innovative and user-focused solutions. We collect and process personal information to enhance your experience and deliver our services effectively. Below is an overview of how we work:",
+                data_collection: "Data Collection: We collect only the information necessary to provide our services, such as your name, email address, and usage data, when you interact with our platform.",
+                data_usage: "Data Usage: Your information is used to personalize your experience, improve our services, and communicate with you about updates or promotions.",
+                data_protection: "Data Protection: We implement industry-standard security measures to safeguard your data from unauthorized access or misuse.",
+                third_party_sharing: "Third-Party Sharing: We do not sell or share your personal information with third parties, except as required by law or to provide our services (e.g., with trusted service providers).",
+                user_control: "User Control: You have the right to access, update, or delete your personal information. Contact us through our website for assistance.",
+                cookie_consent_title: "Cookie Consent",
+                cookie_consent_text: "At SYMOH, we use cookies and similar technologies to enhance your experience on our website. This section explains how we use cookies and how you can manage your preferences.",
+                what_are_cookies: "What Are Cookies: Cookies are small text files stored on your device that help us understand how you interact with our website, such as tracking navigation patterns and preferences.",
+                how_we_use_cookies: "How We Use Cookies: We use cookies to improve website functionality, analyze usage trends, and deliver personalized content. For example, cookies may remember your login details or preferences.",
+                types_of_cookies: "Types of Cookies:",
+                essential_cookies: "Essential Cookies: Necessary for the website to function properly.",
+                analytics_cookies: "Analytics Cookies: Help us understand how users interact with our site.",
+                marketing_cookies: "Marketing Cookies: Used to deliver relevant advertisements.",
+                your_choices: "Your Choices: You can manage cookie preferences through your browser settings, our cookie settings modal, or by contacting us via SYMOH. By accepting this policy, you consent to our use of cookies as described.",
+                contact_info_title: "Contact Information",
+                contact_info_text: "For any questions or concerns about our Privacy Policy or data practices, please contact us:",
+                email_label: "Email:",
+                website_label: "Website:",
+                your_rights_title: "Your Rights",
+                your_rights_text: "We respect your rights to privacy. You may request access to your data, request corrections, or opt out of certain data uses, including cookies. For more details, please visit SYMOH or contact our support team.",
+                updates_title: "Updates to This Policy",
+                updates_text: "We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. Any updates will be posted on this page, and we encourage you to review it periodically.",
+                last_updated: "Last Updated: September 25, 2025",
+                accept_button: "Accept Privacy Policy",
+                cookie_popup_text: "We use cookies to enhance your experience on SYMOH. By continuing, you agree to our use of cookies as described in our Privacy Policy. You can manage your preferences below or in your browser settings.",
+                cookie_accept: "Accept",
+                cookie_customize: "Customize",
+                cookie_decline: "Decline",
+                cookie_modal_title: "Cookie Preferences",
+                essential_cookies_label: "Essential Cookies (Required)",
+                analytics_cookies_label: "Analytics Cookies",
+                marketing_cookies_label: "Marketing Cookies",
+                cookie_save: "Save",
+                cookie_cancel: "Cancel",
+                footer_text: "© 2025 SYMOH. All rights reserved."
+            },
+            es: {
+                title: "Política de Privacidad de SYMOH",
+                header_subtitle: "Aprende más sobre nosotros en SYMOH",
+                commitment_title: "Nuestro Compromiso con Tu Privacidad",
+                commitment_text: "En SYMOH, estamos comprometidos a proteger tu privacidad y garantizar que tu información personal sea manejada de manera segura y responsable. Esta Política de Privacidad describe cómo recolectamos, usamos y protegemos tu información cuando utilizas nuestros servicios o visitas nuestro sitio web en SYMOH.",
+                how_we_work_title: "Cómo Trabajamos",
+                how_we_work_text: "SYMOH se dedica a proporcionar soluciones innovadoras y centradas en el usuario. Recolectamos y procesamos información personal para mejorar tu experiencia y ofrecer nuestros servicios de manera efectiva. A continuación, se presenta una descripción general de cómo trabajamos:",
+                data_collection: "Recolección de Datos: Solo recolectamos la información necesaria para proporcionar nuestros servicios, como tu nombre, dirección de correo electrónico y datos de uso, cuando interactúas con nuestra plataforma.",
+                data_usage: "Uso de Datos: Tu información se utiliza para personalizar tu experiencia, mejorar nuestros servicios y comunicarnos contigo sobre actualizaciones o promociones.",
+                data_protection: "Protección de Datos: Implementamos medidas de seguridad estándar de la industria para proteger tus datos contra accesos no autorizados o mal uso.",
+                third_party_sharing: "Compartir con Terceros: No vendemos ni compartimos tu información personal con terceros, salvo que lo requiera la ley o para proporcionar nuestros servicios (por ejemplo, con proveedores de servicios confiables).",
+                user_control: "Control del Usuario: Tienes derecho a acceder, actualizar o eliminar tu información personal. Contáctanos a través de nuestro sitio web para obtener asistencia.",
+                cookie_consent_title: "Consentimiento de Cookies",
+                cookie_consent_text: "En SYMOH, usamos cookies y tecnologías similares para mejorar tu experiencia en nuestro sitio web. Esta sección explica cómo usamos las cookies y cómo puedes gestionar tus preferencias.",
+                what_are_cookies: "Qué Son las Cookies: Las cookies son pequeños archivos de texto almacenados en tu dispositivo que nos ayudan a entender cómo interactúas con nuestro sitio web, como rastrear patrones de navegación y preferencias.",
+                how_we_use_cookies: "Cómo Usamos las Cookies: Usamos cookies para mejorar la funcionalidad del sitio web, analizar tendencias de uso y ofrecer contenido personalizado. Por ejemplo, las cookies pueden recordar tus datos de inicio de sesión o preferencias.",
+                types_of_cookies: "Tipos de Cookies:",
+                essential_cookies: "Cookies Esenciales: Necesarias para que el sitio web funcione correctamente.",
+                analytics_cookies: "Cookies de Análisis: Nos ayudan a entender cómo los usuarios interactúan con nuestro sitio.",
+                marketing_cookies: "Cookies de Marketing: Utilizadas para ofrecer anuncios relevantes.",
+                your_choices: "Tus Opciones: Puedes gestionar las preferencias de cookies a través de la configuración de tu navegador, nuestro modal de configuración de cookies, o contactándonos a través de SYMOH. Al aceptar esta política, consientes el uso de cookies como se describe.",
+                contact_info_title: "Información de Contacto",
+                contact_info_text: "Para cualquier pregunta o inquietud sobre nuestra Política de Privacidad o prácticas de datos, contáctanos:",
+                email_label: "Correo Electrónico:",
+                website_label: "Sitio Web:",
+                your_rights_title: "Tus Derechos",
+                your_rights_text: "Respetamos tus derechos a la privacidad. Puedes solicitar acceso a tus datos, correcciones, o darte de baja de ciertos usos de datos, incluidas las cookies. Para más detalles, visita SYMOH o contacta a nuestro equipo de soporte.",
+                updates_title: "Actualizaciones a Esta Política",
+                updates_text: "Podemos actualizar esta Política de Privacidad de vez en cuando para reflejar cambios en nuestras prácticas o requisitos legales. Las actualizaciones se publicarán en esta página, y te recomendamos revisarla periódicamente.",
+                last_updated: "Última Actualización: 25 de septiembre de 2025",
+                accept_button: "Aceptar Política de Privacidad",
+                cookie_popup_text: "Usamos cookies para mejorar tu experiencia en SYMOH. Al continuar, aceptas nuestro uso de cookies como se describe en nuestra Política de Privacidad. Puedes gestionar tus preferencias a continuación o en la configuración de tu navegador.",
+                cookie_accept: "Aceptar",
+                cookie_customize: "Personalizar",
+                cookie_decline: "Rechazar",
+                cookie_modal_title: "Preferencias de Cookies",
+                essential_cookies_label: "Cookies Esenciales (Requeridas)",
+                analytics_cookies_label: "Cookies de Análisis",
+                marketing_cookies_label: "Cookies de Marketing",
+                cookie_save: "Guardar",
+                cookie_cancel: "Cancelar",
+                footer_text: "© 2025 SYMOH. Todos los derechos reservados."
+            },
+            fr: {
+                title: "Politique de Confidentialité de SYMOH",
+                header_subtitle: "En savoir plus sur nous sur SYMOH",
+                commitment_title: "Notre Engagement envers Votre Vie Privée",
+                commitment_text: "Chez SYMOH, nous nous engageons à protéger votre vie privée et à garantir que vos informations personnelles sont traitées de manière sûre et responsable. Cette Politique de Confidentialité décrit comment nous collectons, utilisons et protégeons vos informations lorsque vous utilisez nos services ou visitez notre site web sur SYMOH.",
+                how_we_work_title: "Comment Nous Fonctionnons",
+                how_we_work_text: "SYMOH se consacre à fournir des solutions innovantes et centrées sur l'utilisateur. Nous collectons et traitons des informations personnelles pour améliorer votre expérience et fournir nos services efficacement. Voici un aperçu de notre fonctionnement :",
+                data_collection: "Collecte de Données : Nous collectons uniquement les informations nécessaires pour fournir nos services, telles que votre nom, adresse e-mail et données d'utilisation, lorsque vous interagissez avec notre plateforme.",
+                data_usage: "Utilisation des Données : Vos informations sont utilisées pour personnaliser votre expérience, améliorer nos services et communiquer avec vous concernant les mises à jour ou promotions.",
+                data_protection: "Protection des Données : Nous mettons en œuvre des mesures de sécurité conformes aux normes de l'industrie pour protéger vos données contre tout accès non autorisé ou mauvaise utilisation.",
+                third_party_sharing: "Partage avec des Tiers : Nous ne vendons ni ne partageons vos informations personnelles avec des tiers, sauf si requis par la loi ou pour fournir nos services (par exemple, avec des prestataires de services de confiance).",
+                user_control: "Contrôle de l'Utilisateur : Vous avez le droit d'accéder, de mettre à jour ou de supprimer vos informations personnelles. Contactez-nous via notre site web pour obtenir de l'aide.",
+                cookie_consent_title: "Consentement aux Cookies",
+                cookie_consent_text: "Chez SYMOH, nous utilisons des cookies et des technologies similaires pour améliorer votre expérience sur notre site web. Cette section explique comment nous utilisons les cookies et comment vous pouvez gérer vos préférences.",
+                what_are_cookies: "Que Sont les Cookies : Les cookies sont de petits fichiers texte stockés sur votre appareil qui nous aident à comprendre comment vous interagissez avec notre site web, comme suivre les schémas de navigation et les préférences.",
+                how_we_use_cookies: "Comment Nous Utilisons les Cookies : Nous utilisons des cookies pour améliorer la fonctionnalité du site web, analyser les tendances d'utilisation et fournir un contenu personnalisé. Par exemple, les cookies peuvent mémoriser vos informations de connexion ou préférences.",
+                types_of_cookies: "Types de Cookies :",
+                essential_cookies: "Cookies Essentiels : Nécessaires pour que le site web fonctionne correctement.",
+                analytics_cookies: "Cookies Analytiques : Nous aident à comprendre comment les utilisateurs interagissent avec notre site.",
+                marketing_cookies: "Cookies Marketing : Utilisés pour diffuser des publicités pertinentes.",
+                your_choices: "Vos Choix : Vous pouvez gérer vos préférences de cookies via les paramètres de votre navigateur, notre modal de paramètres de cookies, ou en nous contactant via SYMOH. En acceptant cette politique, vous consentez à notre utilisation des cookies comme décrit.",
+                contact_info_title: "Informations de Contact",
+                contact_info_text: "Pour toute question ou préoccupation concernant notre Politique de Confidentialité ou nos pratiques en matière de données, veuillez nous contacter :",
+                email_label: "E-mail :",
+                website_label: "Site Web :",
+                your_rights_title: "Vos Droits",
+                your_rights_text: "Nous respectons vos droits à la vie privée. Vous pouvez demander l'accès à vos données, demander des corrections ou refuser certains usages de données, y compris les cookies. Pour plus de détails, visitez SYMOH ou contactez notre équipe de support.",
+                updates_title: "Mises à Jour de Cette Politique",
+                updates_text: "Nous pouvons mettre à jour cette Politique de Confidentialité de temps à autre pour refléter les changements dans nos pratiques ou les exigences légales. Les mises à jour seront publiées sur cette page, et nous vous encourageons à la consulter régulièrement.",
+                last_updated: "Dernière Mise à Jour : 25 septembre 2025",
+                accept_button: "Accepter la Politique de Confidentialité",
+                cookie_popup_text: "Nous utilisons des cookies pour améliorer votre expérience sur SYMOH. En continuant, vous acceptez notre utilisation des cookies comme décrit dans notre Politique de Confidentialité. Vous pouvez gérer vos préférences ci-dessous ou dans les paramètres de votre navigateur.",
+                cookie_accept: "Accepter",
+                cookie_customize: "Personnaliser",
+                cookie_decline: "Refuser",
+                cookie_modal_title: "Préférences de Cookies",
+                essential_cookies_label: "Cookies Essentiels (Requis)",
+                analytics_cookies_label: "Cookies Analytiques",
+                marketing_cookies_label: "Cookies Marketing",
+                cookie_save: "Enregistrer",
+                cookie_cancel: "Annuler",
+                footer_text: "© 2025 SYMOH. Tous droits réservés."
+            }
+        };
+
+        // Load saved language or default to English
+        window.onload = function() {
+            console.log("Welcome to SYMOH's Privacy Policy page!");
+            const savedLanguage = localStorage.getItem('language') || 'en';
+            document.getElementById('languageSelect').value = savedLanguage;
+            changeLanguage(savedLanguage);
+            if (!localStorage.getItem('cookiesAccepted')) {
+                document.getElementById('cookiePopup').classList.add('show');
+            }
+        };
+
+        // Change language
+        function changeLanguage(lang) {
+            const selectedLang = lang || document.getElementById('languageSelect').value;
+            localStorage.setItem('language', selectedLang);
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[selectedLang][key]) {
+                    // Preserve SYMOH links while updating text
+                    if (element.tagName === 'P' || element.tagName === 'H1') {
+                        element.innerHTML = translations[selectedLang][key].replace(
+                            'SYMOH',
+                            '<a href="https://symoh.netlify.app" target="_blank">SYMOH</a>'
+                        );
+                    } else if (element.tagName === 'LI' && element.querySelector('a')) {
+                        // Handle list items with links
+                        const link = element.querySelector('a');
+                        element.innerHTML = `<strong>${translations[selectedLang][key].split(': ')[0]}:</strong> ${translations[selectedLang][key].split(': ')[1].replace('SYMOH', `<a href="https://symoh.netlify.app" target="_blank">SYMOH</a>`)}`;
+                    } else {
+                        element.textContent = translations[selectedLang][key];
+                    }
+                }
+            });
+            // Update document language for accessibility
+            document.documentElement.lang = selectedLang;
+        }
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Scroll-to-top button visibility
+        window.addEventListener('scroll', function() {
+            const scrollButton = document.getElementById('scrollToTop');
+            if (window.scrollY > 300) {
+                scrollButton.classList.add('show');
+            } else {
+                scrollButton.classList.remove('show');
+            }
+        });
+
+        // Scroll-to-top button click
+        document.getElementById('scrollToTop').addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Main Accept button
+        function acceptPolicy() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            localStorage.setItem('analyticsCookies', 'true');
+            localStorage.setItem('marketingCookies', 'true');
+            window.location.href = 'https://symoh.netlify.app';
+        }
+
+        // Cookie popup Accept button
+        function acceptCookies() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            localStorage.setItem('analyticsCookies', 'true');
+            localStorage.setItem('marketingCookies', 'true');
+            document.getElementById('cookiePopup').classList.remove('show');
+            window.location.href = 'https://symoh.netlify.app';
+        }
+
+        // Cookie popup Decline button
+        function declineCookies() {
+            localStorage.setItem('cookiesAccepted', 'false');
+            localStorage.setItem('analyticsCookies', 'false');
+            localStorage.setItem('marketingCookies', 'false');
+            document.getElementById('cookiePopup').classList.remove('show');
+        }
+
+        // Show cookie customization modal
+        function showCookieModal() {
+            document.getElementById('cookieModal').classList.add('show');
+        }
+
+        // Close cookie customization modal
+        function closeCookieModal() {
+            document.getElementById('cookieModal').classList.remove('show');
+        }
+
+        // Save cookie preferences
+        function saveCookiePreferences() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            localStorage.setItem('analyticsCookies', document.getElementById('analyticsCookies').checked ? 'true' : 'false');
+            localStorage.setItem('marketingCookies', document.getElementById('marketingCookies').checked ? 'true' : 'false');
+            document.getElementById('cookieModal').classList.remove('show');
+            document.getElementById('cookiePopup').classList.remove('show');
+            window.location.href = 'https://symoh.netlify.app';
+        }
+
+        // Keyboard accessibility for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === 'Space') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

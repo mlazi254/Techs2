@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Symoh Chess</title>
+  <meta name="viewport" content="width=480">
+  <style>
+    body {
+      background: #222;
+      color: #fff;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 0;
+      min-height: 100vh;
+    }
+    h1 {
+      margin-top: 30px;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+    #menuBtn {
+      margin: 16px 0 10px 0;
+      background: #444;
+      color: #fff;
+      border: none;
+      font-size: 1.2em;
+      padding: 8px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #2225;
+      transition: background 0.2s;
+    }
+    #menuBtn:hover {
+      background: #666;
+    }
+    #menu {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      background: #333;
+      box-shadow: 0 2px 12px #0007;
+      border-radius: 10px;
+      padding: 14px 30px 22px 30px;
+      position: absolute;
+      top: 75px;
+      z-index: 100;
+      animation: fadeInMenu 0.25s;
+    }
+    @keyframes fadeInMenu {
+      from { opacity: 0; transform: translateY(-16px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    #menu select, #menu button, #menu a {
+      margin-bottom: 10px;
+    }
+    #menu label {
+      font-size: 1em;
+    }
+    #menu select {
+      padding: 5px 10px;
+      font-size: 1em;
+      border-radius: 5px;
+      border: none;
+      background: #444;
+      color: #fff;
+      outline: none;
+      margin-right: 10px;
+      margin-bottom: 12px;
+    }
+    #menu a, #menu button.menu-link {
+      display: block;
+      background: #09f;
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      font-size: 1em;
+      border-radius: 6px;
+      padding: 7px 16px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px #0002;
+      transition: background 0.2s;
+      text-align: center;
+    }
+    #menu a:hover, #menu button.menu-link:hover {
+      background: #0070e0;
+    }
+    #musicSection {
+      margin-top: 12px;
+      padding: 10px 0 0 0;
+      text-align: center;
+    }
+    #musicSection label {
+      font-size: 1em;
+    }
+    #musicSection select {
+      margin-top: 5px;
+      margin-bottom: 6px;
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: none;
+      background: #444;
+      color: #fff;
+      font-size: 1em;
+    }
+    #musicPlayBtn {
+      background: #09f;
+      color: #fff;
+      border-radius: 6px;
+      border: none;
+      padding: 6px 16px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-bottom: 6px;
+      margin-top: 6px;
+      transition: background 0.2s;
+    }
+    #musicPlayBtn:hover {
+      background: #0070e0;
+    }
+    #shareSection {
+      background: #2a2a2a;
+      border-radius: 8px;
+      padding: 14px 18px 18px 18px;
+      margin-bottom: 10px;
+      margin-top: 5px;
+      text-align: center;
+      box-shadow: 0 2px 12px #0005;
+    }
+    #shareSection input, #shareSection button {
+      margin: 6px 2px 7px 2px;
+      font-size: 1em;
+    }
+    #shareCode, #yourName {
+      padding: 6px 12px;
+      border-radius: 5px;
+      border: none;
+      background: #444;
+      color: #fff;
+      width: 140px;
+      margin-bottom: 4px;
+    }
+    #generateCodeBtn, #joinCodeBtn, #copyCodeBtn {
+      background: #09f;
+      color: #fff;
+      border-radius: 5px;
+      border: none;
+      padding: 6px 16px;
+      margin-top: 5px;
+      margin-bottom: 4px;
+      cursor: pointer;
+      font-size: 0.95em;
+      transition: background 0.2s;
+    }
+    #generateCodeBtn:hover, #joinCodeBtn:hover, #copyCodeBtn:hover {
+      background: #0070e0;
+    }
+    #sharingCodeDisplay {
+      margin:7px 0 5px 0;
+      font-size:1.1em;
+      color:#0af;
+      user-select: text;
+      word-break: break-all;
+    }
+    #namesDisplay {
+      margin-bottom: 12px;
+      font-size: 1.15em;
+      font-weight: bold;
+      color: #fffa;
+      letter-spacing: 1px;
+    }
+    #status {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      min-height: 1.5em;
+    }
+    #resetBtn {
+      margin-bottom: 20px;
+      font-size: 1em;
+      padding: 8px 18px;
+      border: none;
+      background: #09f;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px #0002;
+      transition: background 0.2s;
+    }
+    #resetBtn:hover {
+      background: #0070e0;
+    }
+    #chessboard {
+      display: grid;
+      grid-template-columns: repeat(8, 45px);
+      grid-template-rows: repeat(8, 45px);
+      border: 4px solid #fff;
+      box-shadow: 0 0 20px #000;
+      margin: 20px 0;
+      width: 360px;
+      height: 360px;
+      background: #222;
+    }
+    .square {
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6em;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s;
+    }
+    .white {
+      background: #f0d9b5;
+    }
+    .black {
+      background: #b58863;
+    }
+    .selected {
+      outline: 3px solid #09f;
+      z-index: 1;
+    }
+    .moveable {
+      background: #8fd694 !important;
+    }
+    #footer {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 1em;
+      color: #ccc;
+    }
+    #footer a {
+      color: #09f;
+      text-decoration: underline;
+      margin: 0 5px;
+      transition: color 0.2s;
+    }
+    #footer a:hover {
+      color: #fff;
+    }
+    #waBtn {
+      display: inline-block;
+      background: #25D366;
+      color: #fff;
+      border-radius: 6px;
+      border: none;
+      padding: 7px 16px;
+      font-size: 1em;
+      margin-left: 8px;
+      margin-top: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 2px 6px #0002;
+      transition: background 0.2s;
+    }
+    #waBtn:hover {
+      background: #128C7E;
+    }
+    #instaBtn {
+      display: inline-block;
+      background: #d6249f;
+      color: #fff;
+      border-radius: 6px;
+      border: none;
+      padding: 7px 16px;
+      font-size: 1em;
+      margin-left: 8px;
+      margin-top: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 2px 6px #0002;
+      transition: background 0.2s;
+    }
+    #instaBtn:hover {
+      background: #8134AF;
+    }
+    @media (max-width: 500px) {
+      #chessboard {
+        grid-template-columns: repeat(8, 30px);
+        grid-template-rows: repeat(8, 30px);
+        width: 240px;
+        height: 240px;
+      }
+      .square {
+        width: 30px;
+        height: 30px;
+        font-size: 1em;
+      }
+      #menu {
+        padding: 8px 5vw 12px 5vw;
+      }
+      #shareSection {
+        padding: 8px 2vw 10px 2vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Symoh Chess ♟️</h1>
+  <div id="shareSection">
+    <div style="margin-bottom:8px;font-weight:bold;color:#0af;font-size:1.1em;">Play With Friends</div>
+    <input id="yourName" type="text" placeholder="Your Name" maxlength="16">
+    <button id="generateCodeBtn">Generate Sharing Code</button>
+    <div id="sharingCodeDisplay" style="margin:7px 0 5px 0;">
+      <!-- Sharing code will appear here -->
+    </div>
+    <button id="copyCodeBtn" style="display:none;">Copy Code</button>
+    <hr style="width:90%;margin:10px 0 10px 0;border:1px solid #444;">
+    <input id="shareCode" type="text" placeholder="Enter Sharing Code">
+    <button id="joinCodeBtn">Join Game</button>
+    <div id="joinStatus" style="margin:6px 0 0 0;color:#0af;font-size:0.99em;"></div>
+  </div>
+  <div id="namesDisplay"></div>
+  <button id="menuBtn">☰ Menu</button>
+  <div id="menu">
+    <label for="computerPlayer">Computer Player:</label>
+    <select id="computerPlayer">
+      <option value="SYMOHCHEGE">SYMOHCHEGE</option>
+      <option value="Marytech">Marytech</option>
+      <option value="chazy">chazy</option>
+    </select>
+    <label for="level">Level:</label>
+    <select id="level">
+      <option value="easy">Easy</option>
+      <option value="hard">Hard</option>
+      <option value="harder">Harder</option>
+      <option value="master">Master</option>
+      <option value="more">More</option>
+    </select>
+    <button id="resetBtn" class="menu-link">Reset Game</button>
+    <a href="https://symohcontacts.vercel.app" target="_blank" class="menu-link">Visit My Site</a>
+    <button id="helpBtn" class="menu-link">Helping AI</button>
+    <div id="musicSection">
+      <label for="musicSelect">🎵 Music:</label><br>
+      <select id="musicSelect">
+        <option value="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfe6b7b.mp3">Calm Piano</option>
+        <option value="https://cdn.pixabay.com/audio/2023/05/23/audio_1275e8a1e6.mp3">Upbeat Electronic</option>
+        <option value="https://cdn.pixabay.com/audio/2022/03/15/audio_115b41b6d6.mp3">Chill Lo-Fi</option>
+        <option value="https://cdn.pixabay.com/audio/2022/03/10/audio_115f1e7e7b.mp3">Relax Guitar</option>
+        <option value="https://cdn.pixabay.com/audio/2022/10/16/audio_125a20e6e4.mp3">Focus Ambient</option>
+      </select><br>
+      <button id="musicPlayBtn">Play Music</button>
+      <audio id="musicAudio" loop style="display:none;"></audio>
+    </div>
+  </div>
+  <div id="status"></div>
+  <div id="chessboard"></div>
+  <div id="footer">
+    ©2025 Created by <a href="https://symohcontacts.vercel.app" target="_blank">SYMOH</a>
+    <a id="waBtn" href="https://wa.me/254788729180" target="_blank" title="WhatsApp"><span style="font-size:1.15em;">WHATSAPP</span></a>
+    <a id="instaBtn" href="https://instagram.com/symohke2" target="_blank" title="Instagram">INSTAGRAM</a>
+  </div>
+  <script>
+    // Sharing code logic (local only, not real online sync)
+    let sharePlayers = {white:"", black:""};
+    let sharingCode = "";
+    function generateCode() {
+      const name = document.getElementById('yourName').value.trim() || "Player";
+      sharingCode = Math.random().toString(36).substr(2, 8).toUpperCase();
+      document.getElementById('sharingCodeDisplay').textContent = "Your sharing code: " + sharingCode;
+      document.getElementById('copyCodeBtn').style.display = 'inline-block';
+      sharePlayers.white = name;
+      sharePlayers.black = "";
+      displayNames();
+      document.getElementById('joinStatus').textContent = "";
+    }
+    document.getElementById('copyCodeBtn').onclick = function() {
+      navigator.clipboard.writeText(sharingCode).then(function() {
+        document.getElementById('copyCodeBtn').textContent = "Copied!";
+        setTimeout(()=>{document.getElementById('copyCodeBtn').textContent="Copy Code"},900);
+      });
+    };
+    function joinCode() {
+      const code = document.getElementById('shareCode').value.trim().toUpperCase();
+      if (code.length !== 8) {
+        document.getElementById('joinStatus').textContent = "Invalid sharing code!";
+        return;
+      }
+      sharingCode = code;
+      sharePlayers.black = "Friend";
+      document.getElementById('joinStatus').textContent = "Connected! You joined code: " + code;
+      displayNames();
+      document.getElementById('sharingCodeDisplay').textContent = "";
+      document.getElementById('copyCodeBtn').style.display = 'none';
+    }
+    function displayNames() {
+      let n1 = sharePlayers.white ? sharePlayers.white : "White";
+      let n2 = sharePlayers.black ? sharePlayers.black : "Black";
+      document.getElementById('namesDisplay').textContent =
+        `Playing: ${n1} vs ${n2}`;
+    }
+    document.getElementById('generateCodeBtn').onclick = generateCode;
+    document.getElementById('joinCodeBtn').onclick = joinCode;
+
+    // Chess board and pieces
+    const PIECES = {
+      wK: '♔', wQ: '♕', wR: '♖', wB: '♗', wN: '♘', wP: '♙',
+      bK: '♚', bQ: '♛', bR: '♜', bB: '♝', bN: '♞', bP: '♟'
+    };
+
+    const INIT_BOARD = [
+      ['bR','bN','bB','bQ','bK','bB','bN','bR'],
+      ['bP','bP','bP','bP','bP','bP','bP','bP'],
+      [ '', '', '', '', '', '', '', '' ],
+      [ '', '', '', '', '', '', '', '' ],
+      [ '', '', '', '', '', '', '', '' ],
+      [ '', '', '', '', '', '', '', '' ],
+      ['wP','wP','wP','wP','wP','wP','wP','wP'],
+      ['wR','wN','wB','wQ','wK','wB','wN','wR']
+    ];
+
+    let board = [];
+    let turn = 'w';
+    let selected = null;
+    let moveableSquares = [];
+    let gameOver = false;
+    let computerPlayer = "symoh";
+    let level = "easy";
+
+    const chessboard = document.getElementById('chessboard');
+    const statusDiv = document.getElementById('status');
+    const resetBtn = document.getElementById('resetBtn');
+    const computerPlayerSelect = document.getElementById('computerPlayer');
+    const levelSelect = document.getElementById('level');
+    const menuBtn = document.getElementById('menuBtn');
+    const menuDiv = document.getElementById('menu');
+    const helpBtn = document.getElementById('helpBtn');
+    const musicSelect = document.getElementById('musicSelect');
+    const musicPlayBtn = document.getElementById('musicPlayBtn');
+    const musicAudio = document.getElementById('musicAudio');
+    let musicPlaying = false;
+
+    // Menu toggle
+    menuBtn.onclick = () => {
+      menuDiv.style.display = (menuDiv.style.display === 'flex') ? 'none' : 'flex';
+      menuDiv.style.position = 'absolute';
+      menuDiv.style.left = '50%';
+      menuDiv.style.transform = 'translateX(-50%)';
+    };
+    document.body.addEventListener('click', function(e) {
+      if (!menuDiv.contains(e.target) && e.target !== menuBtn) {
+        menuDiv.style.display = 'none';
+      }
+    });
+
+    computerPlayerSelect.onchange = () => {
+      computerPlayer = computerPlayerSelect.value;
+      if (turn === 'b' && !gameOver) setTimeout(computerMove, 500);
+    };
+    levelSelect.onchange = () => {
+      level = levelSelect.value;
+      if (turn === 'b' && !gameOver) setTimeout(computerMove, 500);
+    };
+
+    helpBtn.onclick = () => {
+      window.open('https://symohai.netlify.app', '_blank');
+    };
+
+    // MUSIC
+    function playMusic() {
+      musicAudio.src = musicSelect.value;
+      musicAudio.play();
+      musicPlaying = true;
+      musicPlayBtn.textContent = 'Pause Music';
+    }
+    function pauseMusic() {
+      musicAudio.pause();
+      musicPlaying = false;
+      musicPlayBtn.textContent = 'Play Music';
+    }
+    musicPlayBtn.onclick = () => {
+      if (!musicPlaying) playMusic();
+      else pauseMusic();
+    };
+    musicSelect.onchange = () => {
+      if (musicPlaying) playMusic();
+    };
+
+    // Chess logic
+    function deepCopyBoard(arr) {
+      return arr.map(row => row.slice());
+    }
+
+    function renderBoard() {
+      chessboard.innerHTML = '';
+      for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
+          const square = document.createElement('div');
+          square.className = 'square ' + ((row + col) % 2 === 0 ? 'white' : 'black');
+          square.dataset.row = row;
+          square.dataset.col = col;
+          if (board[row][col]) {
+            square.textContent = PIECES[board[row][col]];
+          }
+          if (selected && selected.row === row && selected.col === col) {
+            square.classList.add('selected');
+          }
+          if (moveableSquares.some(sq => sq.row === row && sq.col === col)) {
+            square.classList.add('moveable');
+          }
+          square.onclick = () => handleSquareClick(row, col);
+          chessboard.appendChild(square);
+        }
+      }
+    }
+
+    function handleSquareClick(row, col) {
+      if (gameOver || turn === 'b') return;
+
+      if (!selected) {
+        if (board[row][col] && board[row][col][0] === 'w') {
+          selected = { row, col };
+          moveableSquares = getLegalMoves(row, col);
+        }
+      } else {
+        if (selected.row === row && selected.col === col) {
+          selected = null;
+          moveableSquares = [];
+        }
+        else if (moveableSquares.some(sq => sq.row === row && sq.col === col)) {
+          makeMove(selected.row, selected.col, row, col);
+          selected = null;
+          moveableSquares = [];
+        }
+        else if (board[row][col] && board[row][col][0] === 'w') {
+          selected = { row, col };
+          moveableSquares = getLegalMoves(row, col);
+        } else {
+          selected = null;
+          moveableSquares = [];
+        }
+      }
+      renderBoard();
+      if (!gameOver && turn === 'b') setTimeout(computerMove, 600);
+    }
+
+    function makeMove(fromRow, fromCol, toRow, toCol) {
+      const moving = board[fromRow][fromCol];
+      if (moving === 'wP' && toRow === 0) {
+        board[toRow][toCol] = 'wQ';
+      } else if (moving === 'bP' && toRow === 7) {
+        board[toRow][toCol] = 'bQ';
+      } else {
+        board[toRow][toCol] = moving;
+      }
+      board[fromRow][fromCol] = '';
+      if (board.flat().indexOf('wK') === -1) {
+        gameOver = true;
+        statusDiv.textContent = computerPlayer + ' wins! ♚';
+      } else if (board.flat().indexOf('bK') === -1) {
+        gameOver = true;
+        statusDiv.textContent = 'You win! ♔';
+      } else {
+        turn = turn === 'w' ? 'b' : 'w';
+        statusDiv.textContent = (turn === 'w' ? "Your turn (White)" : computerPlayer + "'s turn (Black)");
+      }
+    }
+
+    function getLegalMoves(row, col) {
+      const piece = board[row][col];
+      if (!piece) return [];
+      const color = piece[0];
+
+      const moves = [];
+      switch (piece[1]) {
+        case 'P': {
+          const dir = color === 'w' ? -1 : 1;
+          if (inBounds(row+dir, col) && !board[row+dir][col])
+            moves.push({row: row+dir, col});
+          if ((color==='w' && row===6) || (color==='b' && row===1)) {
+            if (!board[row+dir][col] && !board[row+2*dir][col])
+              moves.push({row: row+2*dir, col});
+          }
+          for (let dc of [-1,1]) {
+            if (inBounds(row+dir, col+dc) && board[row+dir][col+dc] && board[row+dir][col+dc][0]!==color)
+              moves.push({row: row+dir, col: col+dc});
+          }
+          break;
+        }
+        case 'N': {
+          for (let dr of [-2,-1,1,2]) {
+            for (let dc of [-2,-1,1,2]) {
+              if (Math.abs(dr)+Math.abs(dc)===3) {
+                const r=row+dr, c=col+dc;
+                if (inBounds(r,c) && (!board[r][c] || board[r][c][0]!==color))
+                  moves.push({row: r, col: c});
+              }
+            }
+          }
+          break;
+        }
+        case 'B': {
+          moves.push(...slideMoves(row, col, color, [[-1,-1],[1,-1],[-1,1],[1,1]]));
+          break;
+        }
+        case 'R': {
+          moves.push(...slideMoves(row, col, color, [[0,1],[0,-1],[1,0],[-1,0]]));
+          break;
+        }
+        case 'Q': {
+          moves.push(...slideMoves(row, col, color, [[0,1],[0,-1],[1,0],[-1,0],[-1,-1],[1,-1],[-1,1],[1,1]]));
+          break;
+        }
+        case 'K': {
+          for (let dr=-1; dr<=1; dr++) for (let dc=-1; dc<=1; dc++) {
+            if (dr!==0 || dc!==0) {
+              const r=row+dr, c=col+dc;
+              if (inBounds(r,c) && (!board[r][c] || board[r][c][0]!==color))
+                moves.push({row: r, col: c});
+            }
+          }
+          break;
+        }
+      }
+      return moves.filter(move => !wouldSelfCapture(row, col, move.row, move.col, color));
+    }
+
+    function slideMoves(row, col, color, directions) {
+      const moves = [];
+      for (const [dr,dc] of directions) {
+        let r=row+dr, c=col+dc;
+        while (inBounds(r,c)) {
+          if (!board[r][c]) {
+            moves.push({row: r, col: c});
+          } else {
+            if (board[r][c][0]!==color) moves.push({row: r, col: c});
+            break;
+          }
+          r+=dr, c+=dc;
+        }
+      }
+      return moves;
+    }
+
+    function inBounds(r, c) {
+      return r>=0 && r<8 && c>=0 && c<8;
+    }
+
+    function wouldSelfCapture(fromRow, fromCol, toRow, toCol, color) {
+      const testBoard = deepCopyBoard(board);
+      testBoard[toRow][toCol] = testBoard[fromRow][fromCol];
+      testBoard[fromRow][fromCol] = '';
+      let king = color+'K', kingPos = null;
+      for (let r=0; r<8; r++) for (let c=0; c<8; c++)
+        if (testBoard[r][c]===king) kingPos = {r, c};
+      if (!kingPos) return false;
+      for (let r=0; r<8; r++) for (let c=0; c<8; c++) {
+        let pc = testBoard[r][c];
+        if (pc && pc[0]!==color) {
+          let moves = getAttacks(testBoard, r, c);
+          if (moves.some(mv => mv.row===kingPos.r && mv.col===kingPos.c))
+            return true;
+        }
+      }
+      return false;
+    }
+
+    function getAttacks(testBoard, row, col) {
+      const piece = testBoard[row][col];
+      if (!piece) return [];
+      const color = piece[0];
+      const moves = [];
+      switch (piece[1]) {
+        case 'P': {
+          const dir = color === 'w' ? -1 : 1;
+          for (let dc of [-1,1]) {
+            if (inBounds(row+dir, col+dc))
+              moves.push({row: row+dir, col: col+dc});
+          }
+          break;
+        }
+        case 'N': {
+          for (let dr of [-2,-1,1,2]) {
+            for (let dc of [-2,-1,1,2]) {
+              if (Math.abs(dr)+Math.abs(dc)===3) {
+                const r=row+dr, c=col+dc;
+                if (inBounds(r,c))
+                  moves.push({row: r, col: c});
+              }
+            }
+          }
+          break;
+        }
+        case 'B': {
+          moves.push(...slideAttacks(testBoard, row, col, [[-1,-1],[1,-1],[-1,1],[1,1]]));
+          break;
+        }
+        case 'R': {
+          moves.push(...slideAttacks(testBoard, row, col, [[0,1],[0,-1],[1,0],[-1,0]]));
+          break;
+        }
+        case 'Q': {
+          moves.push(...slideAttacks(testBoard, row, col, [[0,1],[0,-1],[1,0],[-1,0],[-1,-1],[1,-1],[-1,1],[1,1]]));
+          break;
+        }
+        case 'K': {
+          for (let dr=-1; dr<=1; dr++) for (let dc=-1; dc<=1; dc++) {
+            if (dr!==0 || dc!==0) {
+              const r=row+dr, c=col+dc;
+              if (inBounds(r,c))
+                moves.push({row: r, col: c});
+            }
+          }
+          break;
+        }
+      }
+      return moves;
+    }
+
+    function slideAttacks(testBoard, row, col, directions) {
+      const moves = [];
+      for (const [dr,dc] of directions) {
+        let r=row+dr, c=col+dc;
+        while (inBounds(r,c)) {
+          moves.push({row: r, col: c});
+          if (testBoard[r][c]) break;
+          r+=dr, c+=dc;
+        }
+      }
+      return moves;
+    }
+
+    function resetGame() {
+      board = deepCopyBoard(INIT_BOARD);
+      turn = 'w';
+      selected = null;
+      moveableSquares = [];
+      gameOver = false;
+      statusDiv.textContent = "Your turn (White)";
+      renderBoard();
+    }
+
+    resetBtn.onclick = resetGame;
+
+    function computerMove() {
+      if (gameOver || turn !== 'b') return;
+      let moves = [];
+      for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
+          if (board[row][col] && board[row][col][0] === 'b') {
+            let legal = getLegalMoves(row, col);
+            for (let move of legal) {
+              moves.push({fromRow: row, fromCol: col, toRow: move.row, toCol: move.col});
+            }
+          }
+        }
+      }
+      if (moves.length === 0) {
+        gameOver = true;
+        statusDiv.textContent = computerPlayer + " is stalemated!";
+        return;
+      }
+
+      let chosen;
+      if (computerPlayer === "SYMOHCHEGE") {
+        chosen = pickMoveSymoh(moves);
+      } else if (computerPlayer === "Marytech") {
+        chosen = pickMoveMarytech(moves);
+      } else if (computerPlayer === "chazy") {
+        chosen = pickMoveChazy(moves);
+      } else {
+        chosen = moves[Math.floor(Math.random()*moves.length)];
+      }
+
+      makeMove(chosen.fromRow, chosen.fromCol, chosen.toRow, chosen.toCol);
+      renderBoard();
+    }
+
+    function pickMoveSymoh(moves) {
+      let captures = moves.filter(m => board[m.toRow][m.toCol] && board[m.toRow][m.toCol][0] === 'w');
+      let center = moves.filter(m => m.toRow>=2&&m.toRow<=5&&m.toCol>=2&&m.toCol<=5);
+      if (level === "easy") {
+        return captures.length ? captures[0] : moves[Math.floor(Math.random()*moves.length)];
+      } else if (level === "hard") {
+        return captures.length ? captures[Math.floor(Math.random()*captures.length)] : (center.length ? center[Math.floor(Math.random()*center.length)] : moves[Math.floor(Math.random()*moves.length)]);
+      } else if (level === "harder") {
+        return center.length ? center[Math.floor(Math.random()*center.length)] : (captures.length ? captures[Math.floor(Math.random()*captures.length)] : moves[Math.floor(Math.random()*moves.length)]);
+      } else if (level === "master" || level === "more") {
+        let best = null, bestVal = -Infinity;
+        for (let m of moves) {
+          let val = 0;
+          if (board[m.toRow][m.toCol] && board[m.toRow][m.toCol][0] === 'w') val += 5;
+          if (m.toRow>=2&&m.toRow<=5&&m.toCol>=2&&m.toCol<=5) val += 2;
+          val -= Math.abs(m.toRow-3.5)/2 + Math.abs(m.toCol-3.5)/2;
+          if (val > bestVal) { bestVal = val; best = m; }
+        }
+        return best || moves[Math.floor(Math.random()*moves.length)];
+      }
+      return moves[Math.floor(Math.random()*moves.length)];
+    }
+    function pickMoveMarytech(moves) {
+      if (level === "easy") {
+        return moves[Math.floor(Math.random()*moves.length)];
+      }
+      let pawnMoves = moves.filter(m => board[m.fromRow][m.fromCol] === 'bP');
+      let avoidsCaptures = moves.filter(m => !board[m.toRow][m.toCol]);
+      if (level === "hard" || level === "harder") {
+        return pawnMoves.length ? pawnMoves[Math.floor(Math.random()*pawnMoves.length)] : (avoidsCaptures.length ? avoidsCaptures[Math.floor(Math.random()*avoidsCaptures.length)] : moves[Math.floor(Math.random()*moves.length)]);
+      } else if (level === "master" || level === "more") {
+        let best = null, bestVal = -Infinity;
+        for (let m of moves) {
+          let val = 0;
+          if (board[m.fromRow][m.fromCol] === 'bP') val += 3;
+          if (!board[m.toRow][m.toCol]) val += 2;
+          if (board[m.toRow][m.toCol] && board[m.toRow][m.toCol][0] === 'w') val -= 3;
+          if (val > bestVal) { bestVal = val; best = m; }
+        }
+        return best || moves[Math.floor(Math.random()*moves.length)];
+      }
+      return moves[Math.floor(Math.random()*moves.length)];
+    }
+    function pickMoveChazy(moves) {
+      if (level === "easy") {
+        return moves[Math.floor(Math.random()*moves.length)];
+      }
+      let attacks = moves.filter(m => board[m.toRow][m.toCol] && board[m.toRow][m.toCol][0] === 'w');
+      if (level === "hard" || level === "harder") {
+        return attacks.length ? attacks[Math.floor(Math.random()*attacks.length)] : moves[Math.floor(Math.random()*moves.length)];
+      } else if (level === "master" || level === "more") {
+        let best = null, bestVal = -Infinity;
+        for (let m of moves) {
+          let val = 0;
+          if (board[m.toRow][m.toCol] && board[m.toRow][m.toCol][0] === 'w') val += 6;
+          if (m.toRow === 0 || m.toRow === 7 || m.toCol === 0 || m.toCol === 7) val += 1;
+          if (val > bestVal) { bestVal = val; best = m; }
+        }
+        return best || moves[Math.floor(Math.random()*moves.length)];
+      }
+      return moves[Math.floor(Math.random()*moves.length)];
+    }
+
+    resetGame();
+  </script>
+</body>
+</html>

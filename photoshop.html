@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYMOH Tech - Portfolio</title>
+    <style>
+        /* Global Styles */
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            animation: glitch 1s infinite alternate;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 0.05em 0 0 #f08, -0.05em 0 0 #00f; }
+            14% { text-shadow: 0.05em 0 0 #f09, -0.05em 0 0 #00f; }
+            15% { text-shadow: -0.05em 0 0 #f09, 0.025em 0 0 #00f; }
+            49% { text-shadow: -0.05em 0 0 #f00, 0.025em 0 0 #00f; }
+            50% { text-shadow: 0.025em 0 0 #f00, 0.05em 0 0 #00f; }
+            99% { text-shadow: 0.025em 0 0 #f00, 0.05em 0 0 #00f; }
+            100% { text-shadow: -0.025em 0 0 #f00, -0.025em 0 0 #00f; }
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(to bottom, #000, #111);
+            border-bottom: 2px solid #0f0;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            animation: flicker 2s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+            20%, 24%, 55% { opacity: 0.5; }
+        }
+
+        .hamburger {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            color: #0f0;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .hamburger:hover {
+            color: #fff;
+            text-shadow: 0 0 10px #0f0;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-overlay.show {
+            display: flex;
+        }
+
+        .menu-overlay a {
+            display: block;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 1.5em;
+            text-transform: uppercase;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+        }
+
+        .menu-overlay a:hover {
+            color: #000;
+            box-shadow: 0 0 15px;
+        }
+
+        .sociabuzz {
+            color: #00B7EB;
+            border: 2px solid #00B7EB;
+        }
+
+        .sociabuzz:hover {
+            background: #00B7EB;
+            box-shadow: 0 0 15px #00B7EB;
+        }
+
+        .other {
+            color: #800080;
+            border: 2px solid #800080;
+        }
+
+        .other:hover {
+            background: #800080;
+            box-shadow: 0 0 15px #800080;
+        }
+
+        .whatsapp-menu {
+            color: #25D366;
+            border: 2px solid #25D366;
+        }
+
+        .whatsapp-menu:hover {
+            background: #25D366;
+            box-shadow: 0 0 15px #25D366;
+        }
+
+        .instagram {
+            color: #E1306C;
+            border: 2px solid #E1306C;
+        }
+
+        .instagram:hover {
+            background: #E1306C;
+            box-shadow: 0 0 15px #E1306C;
+        }
+
+        .youtube {
+            color: #FF0000;
+            border: 2px solid #FF0000;
+        }
+
+        .youtube:hover {
+            background: #FF0000;
+            box-shadow: 0 0 15px #FF0000;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #111;
+            border: 2px solid #0f0;
+            padding: 20px;
+            color: #0f0;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 0 20px #0f0;
+            max-width: 400px;
+            width: 90%;
+            border-radius: 5px;
+        }
+
+        .popup.show {
+            display: block;
+        }
+
+        .popup p {
+            margin: 0 0 20px;
+            font-size: 1.2em;
+            line-height: 1.5;
+        }
+
+        .popup button {
+            background: #0f0;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            text-transform: uppercase;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .popup button:hover {
+            background: #fff;
+            box-shadow: 0 0 10px #0f0;
+        }
+
+        #profile {
+            text-align: center;
+            padding: 20px;
+            background: #111;
+            border-bottom: 2px solid #0f0;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #0f0;
+            object-fit: cover;
+            filter: grayscale(100%) brightness(80%);
+            transition: filter 0.3s, transform 0.3s;
+        }
+
+        .profile-pic:hover {
+            filter: grayscale(0%) brightness(100%);
+            transform: scale(1.1);
+        }
+
+        section {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2em;
+            border-bottom: 1px dashed #0f0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        #about p {
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #photos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .photo {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #0f0;
+            transition: transform 0.3s;
+        }
+
+        .photo img,
+        .photo video {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: grayscale(100%) brightness(80%);
+            transition: filter 0.3s;
+        }
+
+        .photo:hover {
+            transform: scale(1.05);
+        }
+
+        .photo:hover img,
+        .photo:hover video {
+            filter: grayscale(0%) brightness(100%);
+        }
+
+        .photo::after {
+            content: '>';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #0f0;
+            font-size: 1.5em;
+            opacity: 0.7;
+        }
+
+        .photo-description {
+            font-size: 0.9em;
+            color: #0f0;
+            text-align: center;
+            margin-top: 10px;
+            transition: text-shadow 0.3s;
+        }
+
+        .photo:hover .photo-description {
+            text-shadow: 0 0 10px #0f0;
+        }
+
+        .like-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .like-button {
+            background: none;
+            border: none;
+            color: #0f0;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .like-button:hover {
+            color: #fff;
+            text-shadow: 0 0 10px #0f0;
+        }
+
+        .like-button.liked {
+            color: #f00;
+            text-shadow: 0 0 10px #f00;
+        }
+
+        .like-count {
+            font-size: 0.9em;
+            color: #0f0;
+        }
+
+        #upload {
+            background: #111;
+            border: 2px solid #0f0;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            border-radius: 5px;
+        }
+
+        #upload-form-container {
+            display: none;
+        }
+
+        #upload-form-container.show {
+            display: block;
+        }
+
+        #upload input[type="password"],
+        #upload input[type="file"],
+        #upload input[type="text"],
+        #upload button {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 10px auto;
+            padding: 10px;
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            border-radius: 5px;
+            transition: box-shadow 0.3s;
+        }
+
+        #upload input[type="password"]:focus,
+        #upload input[type="file"]:focus,
+        #upload input[type="text"]:focus,
+        #upload button:hover {
+            box-shadow: 0 0 10px #0f0;
+        }
+
+        #upload button {
+            background: #0f0;
+            color: #000;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        #upload-error {
+            color: #f00;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }
+
+        #contacts ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #contacts li {
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .contact-button {
+            display: block;
+            padding: 12px 20px;
+            background: #111;
+            text-decoration: none;
+            border: 2px solid;
+            border-radius: 5px;
+            font-size: 1.2em;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+            text-transform: uppercase;
+        }
+
+        .contact-button:hover {
+            color: #000;
+            box-shadow: 0 0 15px;
+        }
+
+        .whatsapp {
+            color: #25D366;
+            border-color: #25D366;
+        }
+
+        .whatsapp:hover {
+            background: #25D366;
+            box-shadow: 0 0 15px #25D366;
+        }
+
+        .whatsapp-channel {
+            color: #00FFAA;
+            border-color: #00FFAA;
+        }
+
+        .whatsapp-channel:hover {
+            background: #00FFAA;
+            box-shadow: 0 0 15px #00FFAA;
+        }
+
+        .phone {
+            color: #FF6F00;
+            border-color: #FF6F00;
+        }
+
+        .phone:hover {
+            background: #FF6F00;
+            box-shadow: 0 0 15px #FF6F00;
+        }
+
+        .telegram {
+            color: #0088CC;
+            border-color: #0088CC;
+        }
+
+        .telegram:hover {
+            background: #0088CC;
+            box-shadow: 0 0 15px #0088CC;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #111;
+            border-top: 2px solid #0f0;
+            font-size: 0.8em;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1em;
+            background: #0f0;
+            animation: blink 1s infinite;
+            margin-left: 5px;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SYMOH Tech And Friends<span class="cursor"></span></h1>
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
+    </header>
+
+    <div id="menuOverlay" class="menu-overlay">
+        <a href="https://sociabuzz.com/symoh" target="_blank" class="sociabuzz">SociaBuzz</a>
+        <a href="https://s3c6.netlify.app" target="_blank" class="other">Website</a>
+        <a href="https://wa.me/254115490569" target="_blank" class="whatsapp-menu">WhatsApp</a>
+        <a href="https://www.instagram.com/symohke2" target="_blank" class="instagram">Instagram</a>
+        <a href="https://www.youtube.com/@techsymoh" target="_blank" class="youtube">YouTube</a>
+    </div>
+
+    <div class="popup" id="welcomePopup">
+        <p>To see the photos clear, press at the &gt;</p>
+        <button onclick="closePopup()">OK</button>
+    </div>
+
+    <section id="profile">
+        <img src="https://files.catbox.moe/5cv2eq.jpg" alt="Symoh Profile Picture" class="profile-pic">
+    </section>
+
+    <section id="about">
+        <h2>Access Granted: About Me</h2>
+        <p>I'm [SYMOH](https://simoh.netlify.app), a digital shadow in the matrix, specializing in code cracks and cyber pursuits. This portfolio decrypts my contacts and visual logs. Enter at your own risk and to get your photos added contact symoh via whatsapp .</p>
+    </section>
+
+    <section id="upload">
+        <h2>Upload Media</h2>
+        <input type="password" id="adminPassword" placeholder="Enter Admin Password to upload your photo">
+        <button onclick="unlockUpload()">Unlock</button>
+        <p id="upload-error">Incorrect password. Try again.</p>
+        <div id="upload-form-container">
+            <input type="file" id="photoInput" accept="image/*">
+            <input type="text" id="photoDescription" placeholder="Optional Description">
+            <button onclick="uploadPhoto()">Add Photo</button>
+        </div>
+    </section>
+
+    <section id="photos">
+        <h2>Decrypted Media From SYMOH</h2>
+        <div class="photo" data-media-id="media1">
+            <img src="https://files.catbox.moe/l511xt.jpg" alt="Media 1">
+            <div class="photo-description">A neon-lit cyberpunk cityscape pulses with digital energy.</div>
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media1')">Like❤️</button>
+                <span class="like-count" id="like-count-media1">25000</span>
+            </div>
+       </div>
+        <div class="photo" data-media-id="media2">
+            <img src="https://files.catbox.moe/06etew.jpg" alt="Media 2">
+            <div class="photo-description">Glitching code streams through a dark terminal.</div>
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media2')">Like❤️</button>
+                <span class="like-count" id="like-count-media2">34500</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media3">
+            <img src="https://files.catbox.moe/ggagfq.jpg" alt="Media 3">
+            <div class="photo-description">A holographic interface flickers in the void.</div>
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media3')">like❤️</button>
+                <span class="like-count" id="like-count-media3">18700</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media4">
+            <img src="https://files.catbox.moe/8x46xh.jpg" alt="Media 4">
+            <div class="photo-description">Encrypted data flows in a neon matrix.</div>
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media4')">like❤️</button>
+                <span class="like-count" id="like-count-media4">10870</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media5">
+            <img src="https://files.catbox.moe/1pjd9e.jpg" alt="Media 5">
+            <div class="photo-description">A shadowy figure navigates the digital underworld.</div>
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media5')">like❤️</button>
+                <span class="like-count" id="like-count-media5">1000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media6">
+            <img src="https://files.catbox.moe/2tftwl.jpg" alt="Media 6">
+            <div class="photo-description">Synthwave vibes echo through a retro-futuristic grid.</div>
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media6')">like❤️</button>
+                <span class="like-count" id="like-count-media6">1000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media7">
+            <img src="https://files.catbox.moe/jw47sy.jpg" alt="Media 7">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media7')">like❤️</button>
+                <span class="like-count" id="like-count-media7">10000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media8">
+            <img src="https://files.catbox.moe/548zny.jpg" alt="Media 8">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media8')">like❤️</button>
+                <span class="like-count" id="like-count-media8">10000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media9">
+            <img src="https://files.catbox.moe/fr06nu.jpg" alt="Media 9">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media9')">like❤️</button>
+                <span class="like-count" id="like-count-media9">1500</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media10">
+            <img src="https://files.catbox.moe/oz8n6u.jpg" alt="Media 10">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media10')">like❤️</button>
+                <span class="like-count" id="like-count-media10">2000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media11">
+            <img src="https://files.catbox.moe/ajvwq4.jpg" alt="Media 11">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media11')">like❤️</button>
+                <span class="like-count" id="like-count-media11">14580</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media12">
+            <img src="https://files.catbox.moe/dgsnfx.jpg" alt="Media 12">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media12')">like❤️</button>
+                <span class="like-count" id="like-count-media12">10000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media13">
+            <img src="https://files.catbox.moe/r0cv94.jpg" alt="Media 13">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media13')">like❤️</button>
+                <span class="like-count" id="like-count-media13">20000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media14">
+            <img src="https://files.catbox.moe/5d4jke.jpg" alt="Media 14">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media14')">like❤️</button>
+                <span class="like-count" id="like-count-media14">59900</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media15">
+            <img src="https://files.catbox.moe/zuatbl.jpg" alt="Media 15">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media15')">like❤️</button>
+                <span class="like-count" id="like-count-media15">1000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media16">
+            <img src="https://files.catbox.moe/jg936n.jpg" alt="Media 16">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media16')">like❤️</button>
+                <span class="like-count" id="like-count-media16">1000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media17">
+            <img src="https://files.catbox.moe/3h15u9.jpg" alt="Media 17">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media17')">lik❤️</button>
+                <span class="like-count" id="like-count-media17">1000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media18">
+            <video controls>
+                <source src="https://files.catbox.moe/nzt6ge.mp4" type="video/mp4">
+                <img src="https://files.catbox.moe/0pq1zg.jpg" alt="Media 18 Fallback">
+            </video>
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media18')">like❤️</button>
+                <span class="like-count" id="like-count-media18">1000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media19">
+            <img src="https://files.catbox.moe/0pq1zg.jpg" alt="Media 19">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media19')">like❤️</button>
+                <span class="like-count" id="like-count-media19">9000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media20">
+            <img src="https://files.catbox.moe/c6hcym.jpg" alt="Media 20">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media20')">like❤️</button>
+                <span class="like-count" id="like-count-media20">10000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media21">
+            <img src="https://files.catbox.moe/5cv2eq.jpg" alt="Media 21">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media21')">like❤️</button>
+                <span class="like-count" id="like-count-media21">1680</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media22">
+            <img src="https://files.catbox.moe/sw4lva.jpg" alt="Media 22">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media22')">l8ke❤️</button>
+                <span class="like-count" id="like-count-media22">20000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media23">
+            <img src="https://files.catbox.moe/aa4auc.jpg" alt="Media 23">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media23')">like❤️</button>
+                <span class="like-count" id="like-count-media23">2000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media24">
+            <img src="https://files.catbox.moe/rmfe9o.jpg" alt="Media 24">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media24')">like❤️</button>
+                <span class="like-count" id="like-count-media24">30000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media25">
+            <img src="https://files.catbox.moe/xrpojg.jpg" alt="Media 25">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media25')">like❤️</button>
+                <span class="like-count" id="like-count-media25">40000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media26">
+            <img src="https://files.catbox.moe/hh6r2o.jpg" alt="Media 26">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media26')">like❤️</button>
+                <span class="like-count" id="like-count-media26">5670</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media27">
+            <video controls>
+                <source src="https://files.catbox.moe/q3bmf8.mp4" type="video/mp4">
+                <img src="https://files.catbox.moe/0pq1zg.jpg" alt="Media 27 Fallback">
+            </video>
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media27')">like❤️</button>
+                <span class="like-count" id="like-count-media27">20000</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media28">
+            <img src="https://files.catbox.moe/1z9xi3.jpg" alt="Media 28">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media28')">like❤️</button>
+                <span class="like-count" id="like-count-media28">4909</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media29">
+            <img src="https://files.catbox.moe/lf0qc9.jpg" alt="Media 29">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media29')">like❤️</button>
+                <span class="like-count" id="like-count-media29">2900</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media30">
+            <img src="https://files.catbox.moe/rwwcpy.jpg" alt="Media 30">
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media30')">like❤️</button>
+                <span class="like-count" id="like-count-media30">37600</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media31">
+            <video controls>
+                <source src="https://files.catbox.moe/vblxa5.mp4" type="video/mp4">
+                <img src="https://files.catbox.moe/0pq1zg.jpg" alt="Media 31 Fallback">
+            </video>
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media31')">like❤️</button>
+                <span class="like-count" id="like-count-media31">3009</span>
+            </div>
+        </div>
+        <div class="photo" data-media-id="media32">
+            <video controls>
+                <source src="https://files.catbox.moe/50oll6.mp4" type="video/mp4">
+                <img src="https://files.catbox.moe/0pq1zg.jpg" alt="Media 32 Fallback">
+            </video>
+            <div class="like-container">
+                <button class="like-button" onclick="toggleLike('media32')">like❤️</button>
+                <span class="like-count" id="like-count-media32">25000</span>
+                </div>
+                </div>
+           <div class="photo" data-media-id="media37">
+            <img src="https://files.catbox.moe/5cv2eq.jpg" alt="Media 37" >
+            </div>
+     
+    </section>
+
+    <section id="contacts">
+        <h2>Contact us to get you images added....</h2>
+        <ul>
+            <li><a href="https://wa.me/message/TZCPX2U5YURAK1" target="_blank" class="contact-button whatsapp">WhatsApp</a></li>
+            <li><a href="https://whatsapp.com/channel/0029VbB6vPOBKfhyq51mBH0a" target="_blank" class="contact-button whatsapp-channel">WhatsApp Channel</a></li>
+            <li><a href="tel:+254115490569" target="_blank" class="contact-button phone">Phone: Call us Now</a></li>
+            <li><a href="https://t.me/symohbot" target="_blank" class="contact-button telegram">Telegram Bot</a></li>
+        </ul>
+    </section>
+
+    <footer>
+      ©2025  Created by Symoh. All rights reserved.Take caution..
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+
+    <script>
+        // Firebase Configuration (Replace with your Firebase project config)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Menu Overlay Logic
+        function toggleMenu() {
+            const menuOverlay = document.getElementById('menuOverlay');
+            menuOverlay.classList.toggle('show');
+        }
+
+        // Popup Logic
+        function showPopup() {
+            if (!sessionStorage.getItem('popupShown')) {
+                document.getElementById('welcomePopup').classList.add('show');
+                sessionStorage.setItem('popupShown', 'true');
+            }
+        }
+
+        function closePopup() {
+            document.getElementById('welcomePopup').classList.remove('show');
+        }
+
+        // Upload Section Logic
+        function unlockUpload() {
+            const password = document.getElementById('adminPassword').value;
+            const uploadFormContainer = document.getElementById('upload-form-container');
+            const errorMessage = document.getElementById('upload-error');
+            if (password === 'Stacy') {
+                uploadFormContainer.classList.add('show');
+                errorMessage.style.display = 'none';
+                document.getElementById('adminPassword').value = '';
+            } else {
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        function uploadPhoto() {
+            const photoInput = document.getElementById('photoInput');
+            const descriptionInput = document.getElementById('photoDescription');
+            const photosSection = document.getElementById('photos');
+            const file = photoInput.files[10];
+
+            if (!file) {
+                alert('Please select an image.');
+                return;
+            }
+
+            // Check file size (limit to 10MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Image size exceeds 10MB. Please choose a smaller file.');
+                return;
+            }
+
+            // Check number of stored images (limit to 10)
+            let storedImages = JSON.parse(localStorage.getItem('uploadedImages') || '[]');
+            if (storedImages.length >= 10) {
+                alert('Maximum 10 uploaded images allowed. Clear localStorage to add more.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const mediaId = `uploaded_${Date.now()}`; // Unique ID for uploaded image
+                const photoDiv = document.createElement('div');
+                photoDiv.className = 'photo';
+                photoDiv.setAttribute('data-media-id', mediaId);
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.alt = 'Uploaded Media';
+                photoDiv.appendChild(img);
+
+                const description = descriptionInput.value.trim();
+                if (description) {
+                    const descDiv = document.createElement('div');
+                    descDiv.className = 'photo-description';
+                    descDiv.textContent = description;
+                    photoDiv.appendChild(descDiv);
+                }
+
+                // Add like button and count
+                const likeContainer = document.createElement('div');
+                likeContainer.className = 'like-container';
+                const likeButton = document.createElement('button');
+                likeButton.className = 'like-button';
+                likeButton.innerHTML = 'Like❤️';
+                likeButton.onclick = () => toggleLike(mediaId);
+                const likeCount = document.createElement('span');
+                likeCount.className = 'like-count';
+                likeCount.id = `like-count-${mediaId}`;
+                likeCount.textContent = '0';
+                likeContainer.appendChild(likeButton);
+                likeContainer.appendChild(likeCount);
+                photoDiv.appendChild(likeContainer);
+
+                // Add to DOM
+                photosSection.insertBefore(photoDiv, photosSection.children[2]); // Insert after <h2>
+
+                // Save to localStorage
+                storedImages.unshift({ src: e.target.result, description: description || '', mediaId });
+                localStorage.setItem('uploadedImages', JSON.stringify(storedImages));
+
+                // Initialize like count in Firebase
+                database.ref(`likes/${mediaId}`).set(1000);
+                loadLikes(mediaId);
+
+                // Clear inputs
+                photoInput.value = '';
+                descriptionInput.value = '';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Load uploaded images from localStorage on page load
+        function loadUploadedImages() {
+            const photosSection = document.getElementById('photos');
+            const storedImages = JSON.parse(localStorage.getItem('uploadedImages') || '[]');
+            storedImages.forEach(({ src, description, mediaId }) => {
+                const photoDiv = document.createElement('div');
+                photoDiv.className = 'photo';
+                photoDiv.setAttribute('data-media-id', mediaId || `uploaded_${Date.now()}`);
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = 'Uploaded Media';
+                photoDiv.appendChild(img);
+
+                if (description) {
+                    const descDiv = document.createElement('div');
+                    descDiv.className = 'photo-description';
+                    descDiv.textContent = description;
+                    photoDiv.appendChild(descDiv);
+                }
+
+                // Add like button and count
+                const likeContainer = document.createElement('div');
+                likeContainer.className = 'like-container';
+                const likeButton = document.createElement('button');
+                likeButton.className = 'like-button';
+                likeButton.innerHTML = '❤️';
+                likeButton.onclick = () => toggleLike(photoDiv.getAttribute('data-media-id'));
+                const likeCount = document.createElement('span');
+                likeCount.className = 'like-count';
+                likeCount.id = `like-count-${photoDiv.getAttribute('data-media-id')}`;
+                likeCount.textContent = '0';
+                likeContainer.appendChild(likeButton);
+                likeContainer.appendChild(likeCount);
+                photoDiv.appendChild(likeContainer);
+
+                photosSection.insertBefore(photoDiv, photosSection.children[2]); // Insert after <h2>
+
+                // Load like count from Firebase
+                loadLikes(photoDiv.getAttribute('data-media-id'));
+            });
+        }
+
+        // Load like counts from Firebase
+        function loadLikes(mediaId) {
+            const likeCountElement = document.getElementById(`like-count-${mediaId}`);
+            database.ref(`likes/${mediaId}`).on('value', (snapshot) => {
+                const count = snapshot.val() || 0;
+                likeCountElement.textContent = count;
+                // Update button state based on sessionStorage
+                const liked = sessionStorage.getItem(`liked_${mediaId}`) === 'true';
+                const likeButton = likeCountElement.previousElementSibling;
+                likeButton.classList.toggle('liked', liked);
+            });
+        }
+
+        // Toggle like for a media item
+        function toggleLike(mediaId) {
+            const liked = sessionStorage.getItem(`liked_${mediaId}`) === 'true';
+            const likeButton = document.querySelector(`[data-media-id="${mediaId}"] .like-button`);
+            const likeRef = database.ref(`likes/${mediaId}`);
+
+            if (liked) {
+                // Unlike: decrement count
+                likeRef.transaction((currentCount) => (currentCount > 0 ? currentCount - 1 : 0));
+                sessionStorage.removeItem(`liked_${mediaId}`);
+                likeButton.classList.remove('liked');
+            } else {
+                // Like: increment count
+                likeRef.transaction((currentCount) => (currentCount || 0) + 1);
+                sessionStorage.setItem(`liked_${mediaId}`, 'true');
+                likeButton.classList.add('liked');
+            }
+        }
+
+        // Initialize like counts for static media
+        function initializeLikes() {
+            for (let i = 1; i <= 32; i++) {
+                const mediaId = `media${i}`;
+                database.ref(`likes/${mediaId}`).once('value', (snapshot) => {
+                    if (!snapshot.exists()) {
+                        database.ref(`likes/${mediaId}`).set(0); // Initialize to 0 if not set
+                    }
+                    loadLikes(mediaId);
+                });
+            }
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            showPopup();
+            loadUploadedImages();
+            initializeLikes();
+        };
+    </script>
+</body>
+</html>

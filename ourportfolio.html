@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio of Symoh, a creative developer from Nairobi, Kenya, specializing in web development and interactive experiences." />
+  <meta name="keywords" content="Symoh, web developer, portfolio, Nairobi, Kenya, JavaScript, UI/UX, bots, VPN, VPS" />
+  <meta property="og:title" content="Symoh's Portfolio" />
+  <meta property="og:description" content="Explore Symoh's creative web development projects, bots, VPNs, VPS, and social media growth services." />
+  <meta property="og:image" content="https://files.catbox.moe/awpqxk.jpg" />
+  <meta property="og:url" content="https://yourwebsite.com" />
+  <title>Symoh Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" onload="this.media='all'" />
+  <link rel="manifest" href="/manifest.json" />
+  <style>
+    :root {
+      --main-bg: #141a28;
+      --section-bg: #182843;
+      --accent: #7f5af0;
+      --accent2: #2cb67d;
+      --text-main: #f1f1f1;
+      --button-bg: #7f5af0;
+      --button-bg-hover: #2cb67d;
+      --button-text: #fff;
+      --card-bg: #172137;
+      --shadow: 0 4px 24px #0002;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--main-bg);
+      color: var(--text-main);
+    }
+
+    nav {
+      background: var(--section-bg);
+      display: flex;
+      justify-content: center;
+      padding: 1em 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px #0006;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      margin: 0 2em;
+      font-size: 1.1em;
+      padding-bottom: 4px;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    nav a.active,
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    nav a.active::after,
+    nav a:hover::after {
+      content: '';
+      display: block;
+      height: 2px;
+      background: var(--accent);
+      width: 100%;
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      animation: underline 0.3s;
+    }
+
+    @keyframes underline {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    .section {
+      max-width: 760px;
+      margin: 60px auto 0 auto;
+      padding: 2em;
+      background: var(--section-bg);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(40px);
+      pointer-events: none;
+      transition: opacity 0.6s cubic-bezier(.61,.02,.33,1), transform 0.6s cubic-bezier(.61,.02,.33,1);
+      position: absolute;
+      width: calc(100% - 40px);
+      left: 0;
+      right: 0;
+    }
+
+    .section.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      position: static;
+      animation: fadeInSlide 0.7s;
+    }
+
+    @keyframes fadeInSlide {
+      from { opacity: 0; transform: translateY(60px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-title {
+      font-size: 2.5em;
+      margin-bottom: 0.5em;
+      font-weight: bold;
+      color: var(--accent);
+      letter-spacing: 2px;
+    }
+
+    .hero-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--accent);
+      margin-bottom: 1.2em;
+      box-shadow: 0 2px 18px var(--accent2);
+      background: var(--card-bg);
+    }
+
+    .cta-btn {
+      padding: 1em 2em;
+      margin-top: 1.5em;
+      font-size: 1.1em;
+      background: var(--button-bg);
+      color: var(--button-text);
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .cta-btn:hover,
+    .cta-btn:focus {
+      background: var(--button-bg-hover);
+      color: #fff;
+      transform: scale(1.07) rotate(-2deg);
+      box-shadow: 0 8px 32px var(--button-bg-hover)44;
+      outline: none;
+    }
+
+    .socials {
+      margin-top: 2em;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      justify-content: center;
+    }
+
+    .social-btn {
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      background: var(--card-bg);
+      color: var(--accent);
+      font-size: 1.7em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 10px var(--accent2)22;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .social-btn.youtube { color: #ff5b37; }
+    .social-btn.telegram { color: #229ed9; }
+    .social-btn.whatsapp { color: #25d366; }
+    .social-btn.website { color: #ffd700; }
+    .social-btn.linkedin { color: #0a66c2; }
+    .social-btn.twitter { color: #1da1f2; }
+
+    .social-btn:hover,
+    .social-btn:focus {
+      background: var(--accent);
+      color: var(--section-bg);
+      transform: scale(1.17) rotate(-7deg);
+      outline: 2px solid var(--accent2);
+    }
+
+    .social-btn.youtube:hover,
+    .social-btn.youtube:focus { color: #fff; background: #ff5b37; }
+    .social-btn.telegram:hover,
+    .social-btn.telegram:focus { color: #fff; background: #229ed9; }
+    .social-btn.whatsapp:hover,
+    .social-btn.whatsapp:focus { color: #fff; background: #25d366; }
+    .social-btn.website:hover,
+    .social-btn.website:focus { color: var(--section-bg); background: #ffd700; }
+    .social-btn.linkedin:hover,
+    .social-btn.linkedin:focus { color: #fff; background: #0a66c2; }
+    .social-btn.twitter:hover,
+    .social-btn.twitter:focus { color: #fff; background: #1da1f2; }
+
+    .projects-grid,
+    .catalogue-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5em;
+      margin-top: 2em;
+    }
+
+    .project-card,
+    .catalogue-card {
+      background: var(--card-bg);
+      padding: 1.5em;
+      border-radius: 13px;
+      box-shadow: 0 2px 14px #0003;
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 290px;
+    }
+
+    .project-card:hover,
+    .project-card:focus,
+    .catalogue-card:hover,
+    .catalogue-card:focus {
+      transform: translateY(-8px) scale(1.03) rotate(-1deg);
+      box-shadow: 0 12px 32px var(--accent2)33;
+      outline: none;
+    }
+
+    .project-title,
+    .cat-title {
+      font-size: 1.15em;
+      color: var(--accent);
+      margin-bottom: 0.6em;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .project-img,
+    .cat-img {
+      max-width: 100%;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 7px;
+      margin-bottom: 0.8em;
+      box-shadow: 0 2px 8px var(--accent2)33;
+    }
+
+    .about-img {
+      width: 100%;
+      max-width: 200px;
+      border-radius: 10px;
+      float: right;
+      margin-left: 1.2em;
+      margin-bottom: 0.5em;
+      box-shadow: 0 2px 10px var(--accent2)22;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 1px solid var(--accent);
+      margin-bottom: 1em;
+      padding: 0.8em;
+      border-radius: 8px;
+      font-size: 1em;
+      resize: none;
+    }
+
+    .contact-form button {
+      width: 100%;
+    }
+
+    .contact-confirm {
+      color: var(--accent2);
+      font-weight: bold;
+      margin-top: 1em;
+      opacity: 0;
+      transition: opacity 0.5s;
+      text-align: center;
+    }
+
+    .contact-confirm.visible {
+      opacity: 1;
+    }
+
+    .cat-desc {
+      font-size: 0.97em;
+      color: var(--text-main);
+      margin-bottom: 0.7em;
+      text-align: center;
+    }
+
+    .cat-price {
+      margin-bottom: 1em;
+      font-weight: bold;
+      color: var(--accent2);
+      font-size: 1.03em;
+    }
+
+    .order-btn {
+      padding: 0.7em 1.2em;
+      background: var(--button-bg);
+      color: var(--button-text);
+      border: none;
+      border-radius: 18px;
+      cursor: pointer;
+      font-size: 0.98em;
+      font-weight: bold;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      margin-top: auto;
+    }
+
+    .order-btn:hover,
+    .order-btn:focus {
+      background: var(--button-bg-hover);
+      color: #fff;
+      transform: scale(1.06);
+      outline: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1em;
+      background: var(--section-bg);
+      color: var(--text-main);
+      margin-top: 2em;
+      border-top: 1px solid var(--accent);
+    }
+
+    @media (max-width: 900px) {
+      .section { max-width: 99vw; }
+      nav a { margin: 0 1em; }
+      .about-img { float: none; display: block; margin: 0 auto 1em auto; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#home" class="nav-link active">Home</a>
+    <a href="#about" class="nav-link">About</a>
+    <a href="#projects" class="nav-link">Projects</a>
+    <a href="#catalogue" class="nav-link">Catalogue</a>
+    <a href="#contact" class="nav-link">Contact</a>
+  </nav>
+
+  <main>
+    <section id="home" class="section active">
+      <img class="hero-img" loading="lazy" src="https://files.catbox.moe/awpqxk.jpg" alt="Symoh's profile picture" />
+      <div class="hero-title">SYMOH</div>
+      <p>Welcome to my portfolio! I'm a creative developer passionate about building beautiful, interactive web experiences. Check out my work and let's connect!</p>
+      <div class="socials">
+        <a class="social-btn" href="https://github.com/chazywayne" target="_blank" aria-label="Visit Symoh's GitHub profile">
+          <i class="fab fa-github"></i>
+        </a>
+        <a class="social-btn youtube" href="https://youtube.com/@techsymoh" target="_blank" aria-label="Visit Symoh's YouTube channel">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a class="social-btn telegram" href="https://t.me/symohbot" target="_blank" aria-label="Contact Symoh via Telegram">
+          <i class="fab fa-telegram-plane"></i>
+        </a>
+        <a class="social-btn whatsapp" href="https://wa.me/254788729180" target="_blank" aria-label="Contact Symoh via WhatsApp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a class="social-btn telegram" href="https://t.me/symohbot" target="_blank" aria-label="Interact with Symoh's Telegram Bot">
+          <i class="fas fa-robot"></i>
+        </a>
+        <a class="social-btn website" href="https://symohcontacts.vercel.app" target="_blank" aria-label="Visit Symoh's main website">
+          <i class="fas fa-globe"></i>
+        </a>
+        <a class="social-btn linkedin" href="https://linkedin.com/in/symoh" target="_blank" aria-label="Visit Symoh's LinkedIn profile">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a class="social-btn twitter" href="https://twitter.com/techsymoh" target="_blank" aria-label="Visit Symoh's Twitter profile">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </div>
+      <button class="cta-btn" id="see-projects">See My Projects</button>
+    </section>
+
+    <section id="about" class="section">
+      <h2>About Me</h2>
+      <img class="about-img" loading="lazy" src="https://files.catbox.moe/aa4auc.jpg" alt="Symoh in Nairobi" />
+      <p>
+        Hi! I'm Symoh, a developer and digital creative from Nairobi, Kenya. I specialize in crafting engaging, interactive websites and applications, with a keen eye for detail and a focus on smooth user experiences.<br><br>
+        I love learning new technologies, collaborating on open-source, and turning ideas into reality. When I'm not coding, I enjoy exploring music, art, and the latest tech trends.
+      </p>
+      <ul>
+        <li>✨ Frontend: HTML, CSS, JavaScript</li>
+        <li>⚡ Animations: CSS, GSAP, Framer Motion</li>
+        <li>🔥 Interests: UI/UX, Creative Coding, Open Source</li>
+      </ul>
+    </section>
+
+    <section id="projects" class="section">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card" tabindex="0">
+          <img class="project-img" loading="lazy" src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80" alt="Portfolio Website" />
+          <div class="project-title">Portfolio Website</div>
+          <div>A modern, animated portfolio for developers and creatives. Responsive, fast, and interactive.</div>
+        </div>
+        <div class="project-card" tabindex="0">
+          <img class="project-img" loading="lazy" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Creative Gallery" />
+          <div class="project-title">Creative Gallery</div>
+          <div>Interactive image gallery with motion effects, modals, and filtering for creative works.</div>
+        </div>
+        <div class="project-card" tabindex="0">
+          <img class="project-img" loading="lazy" src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="Contact App" />
+          <div class="project-title">Contact App</div>
+          <div>Simple and beautiful contact manager app built with pure JavaScript and local storage.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="catalogue" class="section">
+      <h2>Catalogue - Purchase a Bot, VPN, VPS or Social Media Services</h2>
+      <div class="catalogue-grid" id="catalogue-grid"></div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <form class="contact-form" id="contact-form" autocomplete="off">
+        <input name="name" type="text" placeholder="Your Name" required aria-label="Your Name" />
+        <input name="email" type="email" placeholder="Your Email" required aria-label="Your Email" />
+        <textarea name="message" rows="4" placeholder="Message..." required aria-label="Your Message"></textarea>
+        <button type="submit" class="cta-btn">Send Message</button>
+      </form>
+      <div class="contact-confirm" id="contact-confirm">Thank you! I'll get back to you soon.</div>
+    </section>
+  </main>
+
+  <footer>©2025 Created by Symoh Chege. All rights reserved.</footer>
+
+  <script>
+    // SPA Navigation
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.section');
+
+    function showSection(hash) {
+      let found = false;
+      sections.forEach(sec => {
+        if ('#' + sec.id === hash) {
+          sec.classList.add('active');
+          found = true;
+        } else {
+          sec.classList.remove('active');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === hash);
+      });
+      return found;
+    }
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const hash = link.getAttribute('href');
+        history.pushState(null, '', hash);
+        showSection(hash);
+      });
+    });
+
+    window.addEventListener('popstate', () => {
+      showSection(window.location.hash || '#home');
+    });
+
+    showSection(window.location.hash || '#home');
+
+    document.getElementById('see-projects').onclick = () => {
+      history.pushState(null, '', '#projects');
+      showSection('#projects');
+    };
+
+    // Project Cards Accessibility
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('focus', () => card.classList.add('hover'));
+      card.addEventListener('blur', () => card.classList.remove('hover'));
+    });
+
+    // Contact Form Handling
+    const contactForm = document.getElementById('contact-form');
+    const contactConfirm = document.getElementById('contact-confirm');
+    contactForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      const formData = new FormData(contactForm);
+      const name = formData.get('name').trim();
+      const email = formData.get('email').trim();
+      const message = formData.get('message').trim();
+
+      if (name.length < 2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || message.length < 10) {
+        alert('Please provide a valid name (min 2 characters), email, and message (min 10 characters).');
+        return;
+      }
+
+      try {
+        const response = await fetch('https://formspree.io/f/mrbyzezz', {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (response.ok) {
+          contactForm.reset();
+          contactConfirm.classList.add('visible');
+          setTimeout(() => contactConfirm.classList.remove('visible'), 2500);
+        } else {
+          alert('Error sending message. Please try again.');
+        }
+      } catch (error) {
+        alert('Network error. Please try again later.');
+      }
+    });
+
+    // Catalogue Data
+    const catalogueItems = [
+      {
+        title: "Telegram Member Adder Bot",
+        img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+        desc: "Automatically add members to your Telegram group or channel. Fast and efficient.",
+        price: 250
+      },
+      {
+        title: "WhatsApp Bulk Sender Bot",
+        img: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+        desc: "Send bulk messages on WhatsApp easily to your contacts. Perfect for marketing.",
+        price: 300
+      },
+      {
+        title: "Instagram Auto Liker Bot",
+        img: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80",
+        desc: "Boost your likes automatically with this smart Instagram bot.",
+        price: 200
+      },
+      {
+        title: "Facebook Group Poster Bot",
+        img: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=400&q=80",
+        desc: "Post to multiple Facebook groups at once. Save time and increase reach.",
+        price: 250
+      },
+      {
+        title: "Premium VPN 1 Month",
+        img: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=400&q=80",
+        desc: "Enjoy fast and secure browsing with our premium VPN for 1 month. Multiple locations, no logs.",
+        price: 300
+      },
+      {
+        title: "Premium VPN 6 Months",
+        img: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
+        desc: "Get 6 months of secure, anonymous VPN access. Unlimited bandwidth included.",
+        price: 800
+      },
+      {
+        title: "VPS Basic (1GB RAM, 1vCPU, 20GB SSD)",
+        img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80",
+        desc: "A reliable virtual private server for your bots, apps or web hosting. 1GB RAM, 1vCPU, 20GB SSD.",
+        price: 350
+      },
+      {
+        title: "VPS Pro (4GB RAM, 2vCPU, 60GB SSD)",
+        img: "https://images.unsplash.com/photo-1465101178521-c1a9136a86d7?auto=format&fit=crop&w=400&q=80",
+        desc: "High performance VPS for demanding workloads. 4GB RAM, 2vCPU, 60GB SSD, root access.",
+        price: 1000
+      },
+      {
+        title: "Telegram Forwarder Bot",
+        img: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=400&q=80",
+        desc: "Automatically forward messages from one group or channel to another on Telegram.",
+        price: 250
+      },
+      {
+        title: "Crypto Trading Signal Bot",
+        img: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80",
+        desc: "Receive real-time crypto trading signals. Maximize your profits with automated alerts.",
+        price: 600
+      },
+      {
+        title: "Instagram Followers (100)",
+        img: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80",
+        desc: "Get 100 high-quality Instagram followers to boost your profile visibility.",
+        price: 100
+      },
+      {
+        title: "Instagram Likes (500)",
+        img: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80",
+        desc: "Add 500 genuine likes to your Instagram posts for increased engagement.",
+        price: 300
+      },
+      {
+        title: "Facebook Followers (200)",
+        img: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=400&q=80",
+        desc: "Gain 200 real Facebook followers to grow your page audience.",
+        price: 200
+      },
+      {
+        title: "Facebook Likes (1000)",
+        img: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=400&q=80",
+        desc: "Receive 1000 likes on your Facebook posts to enhance social proof.",
+        price: 500
+      },
+      {
+        title: "Twitter Followers (50)",
+        img: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=400&q=80",
+        desc: "Acquire 50 active Twitter followers to expand your reach.",
+        price: 150
+      },
+      {
+        title: "Twitter Likes (300)",
+        img: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=400&q=80",
+        desc: "Boost 300 likes on your Twitter posts for better visibility.",
+        price: 250
+      },
+      {
+        title: "LinkedIn Connections (20)",
+        img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&q=80",
+        desc: "Add 20 targeted LinkedIn connections to network professionally.",
+        price: 400
+      },
+      {
+        title: "LinkedIn Likes (100)",
+        img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&q=80",
+        desc: "Get 100 likes on your LinkedIn posts to build credibility.",
+        price: 600
+      },
+      {
+        title: "YouTube Subscribers (10)",
+        img: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+        desc: "Increase your YouTube channel with 10 genuine subscribers.",
+        price: 500
+      },
+      {
+        title: "YouTube Views (1000)",
+        img: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+        desc: "Generate 1000 views for your YouTube videos to improve algorithm ranking.",
+        price: 800
+      },
+      {
+        title: "YouTube Likes (200)",
+        img: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+        desc: "Add 200 likes to your YouTube videos for higher engagement.",
+        price: 400
+      },
+      {
+        title: "Website Viewers (500)",
+        img: "https://images.unsplash.com/photo-1465101162946-4377e57745c3?auto=format&fit=crop&w=400&q=80",
+        desc: "Drive 500 real visitors to your website for traffic boost.",
+        price: 1000
+      },
+      {
+        title: "Website Viewers (5000)",
+        img: "https://images.unsplash.com/photo-1465101162946-4377e57745c3?auto=format&fit=crop&w=400&q=80",
+        desc: "Attract 5000 targeted viewers to your website in a short time.",
+        price: 5000
+      },
+      {
+        title: "Instagram Followers (10000)",
+        img: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80",
+        desc: "Rapid growth with 10000 Instagram followers for viral potential.",
+        price: 10000
+      },
+      {
+        title: "YouTube Subscribers (1000)",
+        img: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+        desc: "Scale your channel with 1000 new YouTube subscribers.",
+        price: 20000
+      }
+    ];
+
+    // Render Catalogue
+    function renderCatalogue() {
+      const grid = document.getElementById('catalogue-grid');
+      grid.innerHTML = "";
+      catalogueItems.forEach((item, i) => {
+        const card = document.createElement('div');
+        card.className = "catalogue-card";
+        card.tabIndex = 0;
+        card.innerHTML = `
+          <img class="cat-img" loading="lazy" src="${item.img}" alt="${item.title}" />
+          <div class="cat-title">${item.title}</div>
+          <div class="cat-desc">${item.desc}</div>
+          <div class="cat-price">KES ${item.price}</div>
+          <button class="order-btn" data-index="${i}">Order</button>
+        `;
+        grid.appendChild(card);
+        card.addEventListener('focus', () => card.classList.add('hover'));
+        card.addEventListener('blur', () => card.classList.remove('hover'));
+      });
+    }
+
+    renderCatalogue();
+
+    // Order Button Handler
+    document.getElementById('catalogue-grid').addEventListener('click', function(e) {
+      if (e.target.classList.contains('order-btn')) {
+        const idx = e.target.getAttribute('data-index');
+        const item = catalogueItems[idx];
+        const message = encodeURIComponent(
+          `Hello Developer, I would like to order:\n\n*${item.title}*\nPrice: KES ${item.price}\n\nPlease provide more details.`
+        );
+        window.open(`https://wa.me/254788729180?text=${message}`, '_blank');
+      }
+    });
+
+    // Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js');
+    }
+  </script>
+</body>
+</html>

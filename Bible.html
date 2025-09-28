@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bible Today</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary-color: #3b82f6;
+            --text-light: #f8fafc;
+            --icon-color: #64748b;
+            --icon-hover: #3b82f6;
+            --whatsapp-color: #25D366;
+            --youtube-color: #FF0000;
+            --glass-blur: 16px;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.15);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        
+        /* Video Background */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            opacity: 0.8;
+        }
+        
+        /* LiquidGlass Design Elements */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-btn {
+            background: rgba(59, 130, 246, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            color: white;
+            border-radius: 24px;
+            padding: 12px 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-btn:hover {
+            background: rgba(59, 130, 246, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Page Container */
+        .page {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        /* Feeling Page */
+        #feeling-page {
+            z-index: 10;
+        }
+        
+        .feeling-container {
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+        
+        .feeling-title {
+            font-size: 28px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .feeling-subtitle {
+            text-align: center;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+        
+        .feeling-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            width: 100%;
+        }
+        
+        @media (max-width: 600px) {
+            .feeling-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .feeling-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .feeling-option:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .feeling-emoji {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+        
+        .feeling-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* Comfort Verse Display */
+        .comfort-container {
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+        
+        .comfort-text {
+            font-size: 20px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+        
+        .comfort-reference {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-top: 15px;
+        }
+        
+        /* Bible Page */
+        #bible-page {
+            display: none;
+            z-index: 5;
+        }
+        
+        .header {
+            width: 100%;
+            max-width: 800px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo {
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .channel-btns {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .channel-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .wa-btn:hover {
+            color: var(--whatsapp-color);
+        }
+        
+        .yt-btn:hover {
+            color: var(--youtube-color);
+        }
+        
+        .input-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .input-field {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 18px;
+            outline: none;
+            font-size: 16px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: var(--glass-border);
+            color: white;
+        }
+        
+        #testament-select, #book-select {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 20px;
+            border-radius: 18px;
+            outline: none;
+            font-size: 16px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: var(--glass-border);
+            color: white;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 15px;
+        }
+        
+        .input-field::placeholder {
+            color: #94a3b8;
+        }
+        
+        .verse-container {
+            width: 100%;
+            max-width: 600px;
+            min-height: 200px;
+            border-radius: 18px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+        }
+        
+        .verse-text {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        
+        .verse-reference {
+            font-style: italic;
+            color: var(--primary-color);
+            text-align: right;
+            margin-top: 15px;
+        }
+        
+        .placeholder-text {
+            color: #64748b;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: var(--glass-border);
+            color: var(--text-light);
+            border-radius: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Footer */
+        .footer {
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            font-size: 14px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 20;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Ad Container */
+        .ad-container {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 500px;
+            padding: 15px;
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            z-index: 15;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { bottom: -100px; opacity: 0; }
+            to { bottom: 60px; opacity: 1; }
+        }
+        
+        .ad-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 16px;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        
+        .ad-close:hover {
+            opacity: 1;
+        }
+        
+        .ad-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .ad-content {
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .feeling-title {
+                font-size: 24px;
+            }
+            
+            .feeling-emoji {
+                font-size: 32px;
+            }
+            
+            .verse-text {
+                font-size: 16px;
+            }
+            
+            .verse-container {
+                padding: 20px;
+            }
+            
+            .channel-btns {
+                gap: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .feeling-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .input-field, #book-select, #testament-select {
+                width: 100%;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <video autoplay muted loop class="video-bg">
+        <source src="https://files.catbox.moe/zbf2x7.mp4" type="video/mp4">
+    </video>
+    
+    <!-- Feeling Page -->
+    <div class="page" id="feeling-page">
+        <div class="feeling-container glass">
+            <h1 class="feeling-title">How Are You Feeling Today?</h1>
+            <p class="feeling-subtitle">Select your mood to receive a comforting Bible verse</p>
+            
+            <div class="feeling-options">
+                <div class="feeling-option glass" data-feeling="happy">
+                    <span class="feeling-emoji">😊</span>
+                    <span class="feeling-name">Happy</span>
+                </div>
+                <div class="feeling-option glass" data-feeling="sad">
+                    <span class="feeling-emoji">😢</span>
+                    <span class="feeling-name">Sad</span>
+                </div>
+                <div class="feeling-option glass" data-feeling="depressed">
+                    <span class="feeling-emoji">😔</span>
+                    <span class="feeling-name">Depressed</span>
+                </div>
+                <div class="feeling-option glass" data-feeling="anxious">
+                    <span class="feeling-emoji">😰</span>
+                    <span class="feeling-name">Anxious</span>
+                </div>
+                <div class="feeling-option glass" data-feeling="angry">
+                    <span class="feeling-emoji">😠</span>
+                    <span class="feeling-name">Angry</span>
+                </div>
+                <div class="feeling-option glass" data-feeling="hopeful">
+                    <span class="feeling-emoji">🤗</span>
+                    <span class="feeling-name">Hopeful</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="comfort-container glass" id="comfort-container">
+            <div class="comfort-text" id="comfort-text"></div>
+            <div class="comfort-reference" id="comfort-reference"></div>
+            <button class="glass-btn" id="next-btn">Continue to Bible</button>
+        </div>
+    </div>
+    
+    <!-- Bible Page -->
+    <div class="page" id="bible-page">
+        <div class="header glass">
+            <div class="logo-container">
+                <div class="logo">🏆</div>
+                <h2>Bible Today</h2>
+            </div>
+            <div class="channel-btns">
+                <button class="channel-btn wa-btn" id="whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i>
+                </button>
+                <button class="channel-btn yt-btn" id="youtube-btn">
+                    <i class="fab fa-youtube"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="input-container glass">
+            <div class="input-row">
+                <select id="testament-select" class="input-field">
+                    <option value="" disabled selected>Select Testament</option>
+                    <option value="old">Old Testament</option>
+                    <option value="new">New Testament</option>
+                </select>
+                <select id="book-select" class="input-field" disabled>
+                    <option value="" disabled selected>Select Book</option>
+                    <!-- Books will be added by JavaScript -->
+                </select>
+            </div>
+            <div class="input-row">
+                <input type="text" id="chapter-input" class="input-field" placeholder="Chapter (e.g. 3)" autocomplete="off">
+                <input type="text" id="verse-input" class="input-field" placeholder="Verse (e.g. 16)" autocomplete="off">
+            </div>
+            <button id="get-verse-btn" class="glass-btn">Get Verse</button>
+        </div>
+        
+        <div class="verse-container glass">
+            <div class="placeholder-text">Enter a Bible reference to display the verse</div>
+            <div class="loading">
+                <div class="loading-spinner"></div>
+            </div>
+            <div class="verse-text" id="verse-text"></div>
+            <div class="verse-reference" id="verse-reference"></div>
+            
+            <div class="action-buttons" id="action-buttons" style="display: none;">
+                <button class="action-btn" id="copy-btn">
+                    <i class="far fa-copy"></i> Copy
+                </button>
+                <button class="action-btn" id="share-wa-btn">
+                    <i class="fab fa-whatsapp"></i> Share
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ad Container -->
+    <div class="ad-container glass" id="ad-container" style="display: none;">
+        <button class="ad-close" id="ad-close"><i class="fas fa-times"></i></button>
+        <div class="ad-title">Support This Developer</div>
+        <div class="ad-content">
+          Supporting the developer.
+            <br>MPESA | Account: 254115490569
+        </div>
+        <button class="glass-btn" id="support-btn">Support Now</button>
+    </div>
+    
+    <!-- Footer with Time -->
+    <div class="footer" id="footer">
+        <span id="current-time"></span> • <span>Marisel</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const feelingPage = document.getElementById('feeling-page');
+            const biblePage = document.getElementById('bible-page');
+            const comfortContainer = document.getElementById('comfort-container');
+            const comfortText = document.getElementById('comfort-text');
+            const comfortReference = document.getElementById('comfort-reference');
+            const nextBtn = document.getElementById('next-btn');
+            const feelingOptions = document.querySelectorAll('.feeling-option');
+            const bookSelect = document.getElementById('book-select');
+            const testamentSelect = document.getElementById('testament-select');
+            const chapterInput = document.getElementById('chapter-input');
+            const verseInput = document.getElementById('verse-input');
+            const getVerseBtn = document.getElementById('get-verse-btn');
+            const verseText = document.getElementById('verse-text');
+            const verseReference = document.getElementById('verse-reference');
+            const placeholderText = document.querySelector('.placeholder-text');
+            const loadingIndicator = document.querySelector('.loading');
+            const actionButtons = document.getElementById('action-buttons');
+            const copyBtn = document.getElementById('copy-btn');
+            const shareWaBtn = document.getElementById('share-wa-btn');
+            const whatsappBtn = document.getElementById('whatsapp-btn');
+            const youtubeBtn = document.getElementById('youtube-btn');
+            const currentTimeDisplay = document.getElementById('current-time');
+            const adContainer = document.getElementById('ad-container');
+            const adClose = document.getElementById('ad-close');
+            const supportBtn = document.getElementById('support-btn');
+            
+            // Bible verses for different feelings
+            const comfortVerses = {
+                happy: [
+                    { text: "This is the day that the Lord has made; let us rejoice and be glad in it.", reference: "Psalm 118:24" },
+                    { text: "The joy of the Lord is your strength.", reference: "Nehemiah 8:10" },
+                    { text: "Rejoice in the Lord always; again I will say, rejoice.", reference: "Philippians 4:4" },
+                    { text: "You make known to me the path of life; in your presence there is fullness of joy; at your right hand are pleasures forevermore.", reference: "Psalm 16:11" },
+                    { text: "A joyful heart is good medicine, but a crushed spirit dries up the bones.", reference: "Proverbs 17:22" },
+                    { text: "May the God of hope fill you with all joy and peace in believing, so that by the power of the Holy Spirit you may abound in hope.", reference: "Romans 15:13" },
+                    { text: "Count it all joy, my brothers, when you meet trials of various kinds.", reference: "James 1:2" },
+                    { text: "The fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness.", reference: "Galatians 5:22" },
+                    { text: "These things I have spoken to you, that my joy may be in you, and that your joy may be full.", reference: "John 15:11" },
+                    { text: "Though you have not seen him, you love him. Though you do not now see him, you believe in him and rejoice with joy that is inexpressible and filled with glory.", reference: "1 Peter 1:8" }
+                ],
+                sad: [
+                    { text: "The Lord is near to the brokenhearted and saves the crushed in spirit.", reference: "Psalm 34:18" },
+                    { text: "He will wipe away every tear from their eyes, and death shall be no more, neither shall there be mourning, nor crying, nor pain anymore.", reference: "Revelation 21:4" },
+                    { text: "Cast your burden on the Lord, and he will sustain you; he will never permit the righteous to be moved.", reference: "Psalm 55:22" },
+                    { text: "Blessed are those who mourn, for they shall be comforted.", reference: "Matthew 5:4" },
+                    { text: "Weeping may tarry for the night, but joy comes with the morning.", reference: "Psalm 30:5" },
+                    { text: "The Lord is my strength and my shield; in him my heart trusts, and I am helped; my heart exults, and with my song I give thanks to him.", reference: "Psalm 28:7" },
+                    { text: "Why are you cast down, O my soul, and why are you in turmoil within me? Hope in God; for I shall again praise him, my salvation and my God.", reference: "Psalm 42:11" },
+                    { text: "He heals the brokenhearted and binds up their wounds.", reference: "Psalm 147:3" },
+                    { text: "For I consider that the sufferings of this present time are not worth comparing with the glory that is to be revealed to us.", reference: "Romans 8:18" },
+                    { text: "Peace I leave with you; my peace I give to you. Not as the world gives do I give to you. Let not your hearts be troubled, neither let them be afraid.", reference: "John 14:27" }
+                ],
+                depressed: [
+                    { text: "Come to me, all who labor and are heavy laden, and I will give you rest.", reference: "Matthew 11:28" },
+                    { text: "Fear not, for I am with you; be not dismayed, for I am your God; I will strengthen you, I will help you, I will uphold you with my righteous right hand.", reference: "Isaiah 41:10" },
+                    { text: "Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me; your rod and your staff, they comfort me.", reference: "Psalm 23:4" },
+                    { text: "The Lord your God is in your midst, a mighty one who will save; he will rejoice over you with gladness; he will quiet you by his love; he will exult over you with loud singing.", reference: "Zephaniah 3:17" },
+                    { text: "For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope.", reference: "Jeremiah 29:11" },
+                    { text: "But they who wait for the Lord shall renew their strength; they shall mount up with wings like eagles; they shall run and not be weary; they shall walk and not faint.", reference: "Isaiah 40:31" },
+                    { text: "Humble yourselves, therefore, under the mighty hand of God so that at the proper time he may exalt you, casting all your anxieties on him, because he cares for you.", reference: "1 Peter 5:6-7" },
+                    { text: "The Lord is my light and my salvation; whom shall I fear? The Lord is the stronghold of my life; of whom shall I be afraid?", reference: "Psalm 27:1" },
+                    { text: "Be strong and courageous. Do not fear or be in dread of them, for it is the Lord your God who goes with you. He will not leave you or forsake you.", reference: "Deuteronomy 31:6" },
+                    { text: "I can do all things through him who strengthens me.", reference: "Philippians 4:13" }
+                ],
+                anxious: [
+                    { text: "Do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God.", reference: "Philippians 4:6" },
+                    { text: "Cast all your anxiety on him because he cares for you.", reference: "1 Peter 5:7" },
+                    { text: "Therefore do not be anxious about tomorrow, for tomorrow will be anxious for itself. Sufficient for the day is its own trouble.", reference: "Matthew 6:34" },
+                    { text: "When the righteous cry for help, the Lord hears and delivers them out of all their troubles.", reference: "Psalm 34:17" },
+                    { text: "Do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand.", reference: "Isaiah 41:10" },
+                    { text: "Anxiety in a man's heart weighs him down, but a good word makes him glad.", reference: "Proverbs 12:25" },
+                    { text: "And which of you by being anxious can add a single hour to his span of life?", reference: "Matthew 6:27" },
+                    { text: "The Lord is at hand; do not be anxious about anything.", reference: "Philippians 4:5" },
+                    { text: "Trust in the Lord with all your heart, and do not lean on your own understanding.", reference: "Proverbs 3:5" },
+                    { text: "You keep him in perfect peace whose mind is stayed on you, because he trusts in you.", reference: "Isaiah 26:3" }
+                ],
+                angry: [
+                    { text: "Be angry and do not sin; do not let the sun go down on your anger.", reference: "Ephesians 4:26" },
+                    { text: "Know this, my beloved brothers: let every person be quick to hear, slow to speak, slow to anger.", reference: "James 1:19" },
+                    { text: "A soft answer turns away wrath, but a harsh word stirs up anger.", reference: "Proverbs 15:1" },
+                    { text: "Refrain from anger, and forsake wrath! Fret not yourself; it tends only to evil.", reference: "Psalm 37:8" },
+                    { text: "Whoever is slow to anger has great understanding, but he who has a hasty temper exalts folly.", reference: "Proverbs 14:29" },
+                    { text: "Good sense makes one slow to anger, and it is his glory to overlook an offense.", reference: "Proverbs 19:11" },
+                    { text: "Let all bitterness and wrath and anger and clamor and slander be put away from you, along with all malice.", reference: "Ephesians 4:31" },
+                    { text: "But now you must put them all away: anger, wrath, malice, slander, and obscene talk from your mouth.", reference: "Colossians 3:8" },
+                    { text: "A man of wrath stirs up strife, and one given to anger causes much transgression.", reference: "Proverbs 29:22" },
+                    { text: "The Lord is merciful and gracious, slow to anger and abounding in steadfast love.", reference: "Psalm 103:8" }
+                ],
+                hopeful: [
+                    { text: "For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope.", reference: "Jeremiah 29:11" },
+                    { text: "May the God of hope fill you with all joy and peace in believing, so that by the power of the Holy Spirit you may abound in hope.", reference: "Romans 15:13" },
+                    { text: "But they who wait for the Lord shall renew their strength; they shall mount up with wings like eagles; they shall run and not be weary; they shall walk and not faint.", reference: "Isaiah 40:31" },
+                    { text: "And now, O Lord, for what do I wait? My hope is in you.", reference: "Psalm 39:7" },
+                    { text: "The hope of the righteous brings joy, but the expectation of the wicked will perish.", reference: "Proverbs 10:28" },
+                    { text: "Be strong and let your heart take courage, all you who wait for the Lord!", reference: "Psalm 31:24" },
+                    { text: "For whatever was written in former days was written for our instruction, that through endurance and through the encouragement of the Scriptures we might have hope.", reference: "Romans 15:4" },
+                    { text: "But as for me, I will look to the Lord; I will wait for the God of my salvation; my God will hear me.", reference: "Micah 7:7" },
+                    { text: "And we know that for those who love God all things work together for good, for those who are called according to his purpose.", reference: "Romans 8:28" },
+                    { text: "The Lord is good to those who wait for him, to the soul who seeks him.", reference: "Lamentations 3:25" }
+                ]
+            };
+            
+            // Old and New Testament books
+            const oldTestamentBooks = [
+                "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy",
+                "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel",
+                "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra",
+                "Nehemiah", "Esther", "Job", "Psalms", "Proverbs",
+                "Ecclesiastes", "Song of Solomon", "Isaiah", "Jeremiah", "Lamentations",
+                "Ezekiel", "Daniel", "Hosea", "Joel", "Amos",
+                "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk",
+                "Zephaniah", "Haggai", "Zechariah", "Malachi"
+            ];
+            
+            const newTestamentBooks = [
+                "Matthew", "Mark", "Luke", "John", "Acts",
+                "Romans", "1 Corinthians", "2 Corinthians", "Galatians", "Ephesians",
+                "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy",
+                "2 Timothy", "Titus", "Philemon", "Hebrews", "James",
+                "1 Peter", "2 Peter", "1 John", "2 John", "3 John",
+                "Jude", "Revelation"
+            ];
+            
+            // Update time
+            function updateTime() {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const seconds = now.getSeconds().toString().padStart(2, '0');
+                
+                currentTimeDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+            }
+            
+            // Update immediately and then every second
+            updateTime();
+            setInterval(updateTime, 1000);
+            
+            // Feeling option selection
+            feelingOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const feeling = this.dataset.feeling;
+                    const verses = comfortVerses[feeling];
+                    const randomVerse = verses[Math.floor(Math.random() * verses.length)];
+                    
+                    comfortText.textContent = randomVerse.text;
+                    comfortReference.textContent = randomVerse.reference;
+                    
+                    document.querySelector('.feeling-container').style.display = 'none';
+                    comfortContainer.style.display = 'flex';
+                });
+            });
+            
+            // Next button to Bible page
+            nextBtn.addEventListener('click', function() {
+                feelingPage.style.display = 'none';
+                biblePage.style.display = 'flex';
+            });
+            
+            // Populate book select based on testament
+            testamentSelect.addEventListener('change', function() {
+                bookSelect.innerHTML = '<option value="" disabled selected>Select Book</option>';
+                bookSelect.disabled = false;
+                
+                const books = this.value === 'old' ? oldTestamentBooks : newTestamentBooks;
+                
+                books.forEach(book => {
+                    const option = document.createElement('option');
+                    option.value = book;
+                    option.textContent = book;
+                    bookSelect.appendChild(option);
+                });
+            });
+            
+            // Show random ad
+            function showRandomAd() {
+                const ads = [
+                    {
+                        title: "Follow Our Channel",
+                        content: "Following our WhatsApp channel.",
+                        buttonText: "Follow Now",
+                        action: function() {
+                            window.open("https://whatsapp.com/channel/0029VbBV4hu6GcGGeyQF6n1O", '_blank');
+                        }
+                    },
+                    {
+                        title: "Support This Ministry",
+                        content: "Supporting the developer. MPESA | Account: 254115490569",
+                        buttonText: "I'll Support",
+                        action: function() {
+                            alert("Thank you for your support! God bless you.");
+                        }
+                    },
+                    {
+                        title: "Watch Our Videos",
+                        content: "Visit our YouTube Channel",
+                        buttonText: "Subscribe Now",
+                        action: function() {
+                            window.open('https://youtube.com/@techsymoh', '_blank');
+                        }
+                    }
+                ];
+                
+                const randomAd = ads[Math.floor(Math.random() * ads.length)];
+                
+                document.querySelector('.ad-title').textContent = randomAd.title;
+                document.querySelector('.ad-content').textContent = randomAd.content;
+                document.getElementById('support-btn').textContent = randomAd.buttonText;
+                
+                // Update button action
+                supportBtn.onclick = randomAd.action;
+                
+                // Show ad
+                adContainer.style.display = 'flex';
+                
+                // Hide after 8 seconds if not closed
+                setTimeout(() => {
+                    if (adContainer.style.display === 'flex') {
+                        adContainer.style.display = 'none';
+                    }
+                }, 8000);
+            }
+            
+            // Close ad
+            adClose.addEventListener('click', function() {
+                adContainer.style.display = 'none';
+            });
+            
+            // Show first ad after 15 seconds
+            setTimeout(showRandomAd, 15000);
+            
+            // Show new ad every 2 minutes
+            setInterval(showRandomAd, 120000);
+            
+            // Channel links
+            whatsappBtn.addEventListener('click', function() {
+                window.open('https://whatsapp.com/channel/0029VbBV4hu6GcGGeyQF6n1O', '_blank');
+            });
+            
+            youtubeBtn.addEventListener('click', function() {
+                window.open('https://youtube.com/@techsymoh'https://kol.jumia.com/s/JLOQp4R, '_blank');
+            });
+            
+            // Get verse
+            getVerseBtn.addEventListener('click', getBibleVerse);
+            
+            // Also allow Enter key to submit
+            [testamentSelect, bookSelect, chapterInput, verseInput].forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        getBibleVerse();
+                    }
+                });
+            });
+            
+            // Copy verse
+            copyBtn.addEventListener('click', function() {
+                const verse = verseText.textContent + '\n\n' + verseReference.textContent;
+                navigator.clipboard.writeText(verse);
+                
+                // Change icon temporarily to indicate success
+                const icon = this.querySelector('i');
+                icon.classList.remove('fa-copy');
+                icon.classList.add('fa-check');
+                
+                setTimeout(() => {
+                    icon.classList.remove('fa-check');
+                    icon.classList.add('fa-copy');
+                }, 2000);
+            });
+            
+            // Share to WhatsApp with bold formatting
+            shareWaBtn.addEventListener('click', function() {
+                const verse = verseText.textContent;
+                const reference = verseReference.textContent;
+                
+                // Format text with WhatsApp bold syntax
+                const formattedVerse = verse.split(' ').map(word => 
+                    word.length > 3 ? `${word}` : word
+                ).join(' ');
+                
+                const message = encodeURIComponent(
+                    `${formattedVerse}\n_${reference}_\n\n*Want to learn more about Christ? Visit https://bible-eight.vercel.app/*`
+                );
+                window.open(`https://wa.me/?text=${message}`, '_blank');
+            });
+            
+            async function getBibleVerse() {
+                const book = bookSelect.value;
+                const chapter = chapterInput.value.trim();
+                const verse = verseInput.value.trim();
+                
+                if (!book || !chapter || !verse) {
+                    alert('Please select a book and enter chapter and verse');
+                    return;
+                }
+                
+                // Show loading state
+                placeholderText.style.display = 'none';
+                verseText.style.display = 'none';
+                verseReference.style.display = 'none';
+                actionButtons.style.display = 'none';
+                loadingIndicator.style.display = 'flex';
+                
+                try {
+                    // Format the reference (e.g., "John+3:16")
+                    const reference = `${book}+${chapter}:${verse}`;
+                    
+                    // Use the Bible API endpoint
+                    const apiUrl = `https://bible-api.com/${reference}`;
+                    
+                    const response = await fetch(apiUrl);
+                    
+                    if (!response.ok) {
+                        throw new Error(`API request failed with status ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.text && data.reference) {
+                        verseText.textContent = data.text;
+                        verseReference.textContent = `— ${data.reference}`;
+                        verseText.style.display = 'block';
+                        verseReference.style.display = 'block';
+                        actionButtons.style.display = 'flex';
+                        placeholderText.style.display = 'none';
+                    } else {
+                        throw new Error("No verse text in response");
+                    }
+                } catch (error) {
+                    console.error('Error fetching Bible verse:', error);
+                    placeholderText.textContent = "Error: Could not fetch verse. Please try again.";
+                    placeholderText.style.display = 'block';
+                    actionButtons.style.display = 'none';
+                } finally {
+                    loadingIndicator.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

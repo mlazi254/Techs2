@@ -1,0 +1,260 @@
+<!<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symoh's Tech Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(45deg, #0a0a0a, #3a4452);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Moving Background Animation */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png'), linear-gradient(45deg, #1a1a1a, #2c3e50);
+            animation: moveBackground 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes moveBackground {
+            0% { background-position: 0 0; }
+            100% { background-position: 200% 200%; }
+        }
+
+        /* Header */
+        .header {
+            color: #00ffcc;
+            font-size: 36px;
+            text-shadow: 0 0 10px #00ffcc, 0 0 20px rgba(0, 255, 204, 0.5);
+            margin: 20px 0;
+            animation: glow 1.5s ease-in-out infinite alternate;
+            text-align: center;
+        }
+
+        /* Profile Photo */
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 3px solid #00ffcc;
+            box-shadow: 0 0 20px #00ffcc, 0 0 40px rgba(0, 255, 204, 0.5);
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Navigation Container */
+        .nav-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+
+        /* Button and Description Wrapper */
+        .button-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* Redesigned Button Styles */
+        .nav-button {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 16px;
+            color: #00ffcc;
+            text-decoration: none;
+            text-transform: uppercase;
+            background: transparent;
+            border: 2px solid #00ffcc;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .nav-button:hover {
+            color: #fff;
+            background: rgba(0, 255, 204, 0.2);
+            box-shadow: 0 0 15px #00ffcc, 0 0 25px #ff00ff;
+            transform: scale(1.05);
+        }
+
+        .nav-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .nav-button:hover::after {
+            width: 200%;
+            height: 200%;
+        }
+
+        /* Description Styles */
+        .button-description {
+            font-size: 14px;
+            color: #b0b0b0;
+            text-align: center;
+            text-shadow: 0 0 5px rgba(0, 255, 204, 0.5);
+        }
+
+        /* Pulse Animation for Buttons */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 5px #00ffcc, 0 0 10px rgba(0, 255, 204, 0.5); }
+            50% { box-shadow: 0 0 10px #00ffcc, 0 0 20px rgba(0, 255, 204, 0.7); }
+            100% { box-shadow: 0 0 5px #00ffcc, 0 0 10px rgba(0, 255, 204, 0.5); }
+        }
+
+        /* Glow Animation for Profile Photo and Header */
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px #00ffcc, 0 0 40px rgba(0, 255, 204, 0.5); }
+            100% { box-shadow: 0 0 30px #ff00ff, 0 0 60px rgba(255, 0, 255, 0.5); }
+        }
+
+        /* Footer */
+        .footer {
+            color: #00ffcc;
+            font-size: 16px;
+            text-shadow: 0 0 10px #00ffcc;
+            margin: 20px 0;
+        }
+
+        /* Ensure Scrollability */
+        html, body {
+            height: auto;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    
+    <!-- Header -->
+    <h1 class="header">Symoh's Tech Hub</h1>
+
+    <!-- Profile Photo -->
+    <div class="profile-photo">
+        <img src="https://files.catbox.moe/jrou92.png" alt="Profile Photo">
+    </div>
+
+    <!-- Navigation Buttons with Descriptions -->
+    <div class="nav-container">
+        <div class="button-wrapper">
+            <a href="Getpremium.html" class="nav-button">Shop with us</a>
+            <p class="button-description">Explore our wide range of products and exclusive deals.</p>
+        </div>
+        <div class="button-wrapper">
+            <a href="contactus.html" class="nav-button">Contact us</a>
+            <p class="button-description">Get in touch with our support team for assistance.</p>
+        </div>
+        <div class="button-wrapper">
+            <a href="Getcreditphones.html" class="nav-button">Buy phones</a>
+            <p class="button-description">Discover the latest smartphones at competitive prices.</p>
+        </div>
+        <div class="button-wrapper">
+            <a href="playchess.html" class="nav-button">Play chess game</a>
+            <p class="button-description">Challenge your mind with our online chess game.</p>
+        </div>
+        <div class="button-wrapper">
+            <a href="FreeAIchat.html" class="nav-button">Chat with our AI</a>
+            <p class="button-description">Interact with our intelligent AI for answers and fun.</p>
+        </div>
+        <div class="button-wrapper">
+            <a href="paneldeploy.html" class="nav-button">Free panel for deployment</a>
+            <p class="button-description">Secure your online presence with our premium VPNs.</p>
+        </di>
+        </di>
+        <div class="button-wrapper">
+            <a href="photoshop.html" class="nav-button">Our gallery</a>
+            <p class="button-description">Browse our collection of stunning images and media.</p>
+        </div>
+        <div class="button-wrapper">
+            <a href="freevirtualnumbers.html" class="nav-button">Get free numbers to use on social medias</a>
+            <p class="button-description">Participate in exciting contests to win cash prizes.</p>
+        </div>
+        <div class="button-wrapper">
+            <a href="Love.html" class="nav-button">Generate love message</a>
+            <p class="button-description">Create heartfelt love messages with our AI tool.</p>
+        </div>
+        <div class="button-wrapper">
+            <a href="catalogue.html" class="nav-button">Search</a>
+            <p class="button-description">Find what you're looking for with our powerful search tool.</p>
+        </div>
+        <div class="button-wrapper">
+            <a href="ourportfolio.html" class="nav-button">Our portfolio</a>
+            <p class="button-description">View our showcase of projects and achievements.</p>
+        </div>
+        <div class="button-wrapper">
+            <a href="VCFcollection.html" class="nav-button">Our vcf</a>
+            <p class="button-description">Access our virtual contact file for easy connections.</p>
+        </div>
+        <div class="button-wrapper">
+            <a href="main.html" class="nav-button">WhatsApp Status Views Increase</a>
+            <p class="button-description">Boost Your whatsApp status with us for free.</p>
+        </div>
+        <div class="button-wrapper">
+            <a href="pornogen.html" class="nav-button">Generate  videos</a>
+            <p class="button-description">Generate bideos with this AI for free .</p>
+        </div>
+        <div class="button-wrapper">
+            <a href="term.html" class="nav-button">Our privacy policy</a>
+            <p class="button-description">Learn about our commitment to your privacy.</p>
+        </div>
+   </div>
+   <div class="button-wrapper">
+     <a href="Aibackgrounderasor.html" class="nav-button">Back ground errasor</a>
+       <p class="button-description">Remove back with our AI</p>
+   </div>
+   <div class="button-wrapper">
+     <a href="ourapps.html" class="nav-button">DOWNLOAD OUR APKS</a>
+     <p class="button-description">Get The fool experience.</p>
+    </div>
+     </di>
+        <div class="button-wrapper">
+            <a href="Websitesniffer.html" class="nav-button">Get any html code website here.</a>
+            <p class="button-description">Browse our collection of stunning images aedia.</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">©2025 Created by Symoh.All Rigths Reserved.</div>
+</body>
+</html>

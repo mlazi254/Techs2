@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create and share personalized love messages with Love Autogenerator.">
+    <meta name="keywords" content="love message, romantic generator, love link, SYMOH">
+    <title>SYMOH Love 💕 Autogenerator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            animation: bgAnim 8s infinite alternate;
+            overflow: hidden;
+        }
+
+        @keyframes bgAnim {
+            0% {background: linear-gradient(135deg, #ff758c, #ff7eb3);}
+            100% {background: linear-gradient(135deg, #ff6a88, #ffb199);}
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 0 20px rgba(255,255,255,0.4);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        input, select, button {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #ff4d79;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover, button:focus {
+            background: #e6005c;
+            outline: none;
+        }
+
+        .output {
+            margin-top: 15px;
+            font-size: 18px;
+            display: none;
+            color: #fff;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            z-index: 10;
+        }
+
+        .insta-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #ff007a;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .insta-btn:hover, .insta-btn:focus {
+            background: #d9006e;
+            outline: none;
+        }
+
+        .love-message {
+            font-size: 20px;
+            line-height: 1.6;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 20px;
+            white-space: pre-wrap;
+            text-align: justify;
+            text-shadow: 0 0 15px #fff;
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+
+        .love-message::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .love-message::-webkit-scrollbar-thumb {
+            background: #ff4d79;
+            border-radius: 4px;
+        }
+
+        .heart {
+            position: fixed;
+            font-size: 24px;
+            animation: floatHearts 6s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes floatHearts {
+            0% {transform: translateY(100vh) scale(1);}
+            100% {transform: translateY(-10vh) scale(1.5);}
+        }
+
+        #startMusicBtn {
+            display: none;
+            margin-top: 10px;
+            padding: 8px 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            background: #00cc66;
+            color: white;
+            border: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        #startMusicBtn:hover, #startMusicBtn:focus {
+            background: #00994d;
+            outline: none;
+        }
+
+        #startMusicBtn::after {
+            content: 'Browser restrictions may prevent auto-play';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 12px;
+            display: none;
+        }
+
+        #startMusicBtn:hover::after {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <main class="container" id="mainContainer">
+        <h1>SYMOH Love 💕 Autogenerator</h1>
+        <select id="gender" aria-label="Select your gender">
+            <option value="">Are you a boy or a girl?</option>
+            <option value="boy">Boy</option>
+            <option value="girl">Girl</option>
+        </select>
+        <input type="text" id="sender" placeholder="Enter your name" aria-label="Your name">
+        <input type="text" id="name" placeholder="Enter loved one's name" aria-label="Loved one's name">
+        <button onclick="generateLink()" aria-label="Generate love message link">Generate Love Link</button>
+        <div class="output" id="output"></div>
+        <button id="copyBtn" style="display:none;" onclick="copyLink()" aria-label="Copy generated link">Copy Link</button>
+    </main>
+
+    <div class="container" id="loveContainer" style="display:none;">
+        <h1>💌 A Special Message for You 💌</h1>
+        <div class="love-message" id="loveMessage"></div>
+        <button id="startMusicBtn" onclick="playMusic()" aria-label="Play background music">Click to Start Music 🎵</button>
+        <audio id="loveMusic" loop>
+            <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <footer class="footer">
+        <p>©2025 Created by SYMOH</p>
+        <a class="insta-btn" href="https://instagram.com/symohke2" target="_blank" aria-label="Follow SYMOH on Instagram">click to Follow me Instagram</a>
+    </footer>
+
+    <script>
+        function sanitizeInput(input) {
+            return input.replace(/[<>&"']/g, (char) => ({
+                '<': '&lt;',
+                '>': '&gt;',
+                '&': '&amp;',
+                '"': '&quot;',
+                "'": '&#x27;'
+            }[char]));
+        }
+
+        function generateLink() {
+            const gender = document.getElementById("gender").value;
+            const sender = sanitizeInput(document.getElementById("sender").value.trim());
+            const name = sanitizeInput(document.getElementById("name").value.trim());
+            const outputDiv = document.getElementById("output");
+            const copyBtn = document.getElementById("copyBtn");
+
+            if (!gender || !name || !sender) {
+                alert("Please select your gender and enter both your name and your loved one's name!");
+                return;
+            }
+
+            let message = "";
+            if (gender === "boy") {
+                message = `My dearest ${name}, from the moment our paths crossed, my world has been filled with colors brighter than the morning sun. Your laughter, like a sweet melody, brings warmth even to the coldest of my days. With every glance, you make my heart race faster, as if it’s learning a new rhythm only you can teach. I wish I could hold your hand right now, whisper in your ear that you are my treasure, my safe place, and my dream come true. Life feels like a beautiful journey, and with you, every step becomes a story worth telling. When the night falls and stars light up the sky, my thoughts wander to you, painting constellations with your name. I want to be the reason behind your brightest smiles, your deepest happiness, and your sweetest memories. ${sender} wants you to know that love isn’t just about words; it’s about the moments we share, the laughter we create, and the promises we keep. You are my inspiration, my favorite person, and my forever. I love you more than these words can ever capture. Always and forever, yours truly,from ${sender}.`;
+            } else {
+                message = `My beloved ${name}, since the day you came into my life, everything has felt like a dream bathed in the glow of sunrise. Your presence fills my heart with peace, as though the universe itself whispered that you were sent to make life beautiful. I find myself smiling at the simplest memories of you – the way you speak, the way you care, the way you light up even the dullest moments. Every day, my love for you grows like a wild garden in bloom, spreading warmth and fragrance in every direction. ${sender} wants you to know that you are my favorite thought every morning, my comfort in every storm, and the melody that plays softly in my soul when the world goes quiet. I want to be the reason behind your laughter, the one you trust when words fail, and the shoulder you lean on when life feels heavy. My heart beats for you, my soul longs for you, and my dreams are painted in your colors. This love isn’t a fleeting moment; it’s a promise, a journey, and a destiny I want to share with you forever. With endless love, always yours,from ${sender}.`;
+            }
+
+            const link = `${window.location.origin}${window.location.pathname}?love=${encodeURIComponent(message)}`;
+            outputDiv.innerHTML = `<br>Generated Link:<br><a href="${link}" target="_blank">${link}</a>`;
+            outputDiv.style.display = "block";
+            copyBtn.style.display = "inline-block";
+        }
+
+        function copyLink() {
+            const outputDiv = document.getElementById("output");
+            const link = outputDiv.querySelector("a").href;
+            navigator.clipboard.writeText(link).then(() => {
+                alert("Link copied! Send it to your loved one 💕");
+            }).catch(() => {
+                const textarea = document.createElement("textarea");
+                textarea.value = link;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textarea);
+                alert("Link copied! Send it to your loved one 💕");
+            });
+        }
+
+        let heartCount = 0;
+        const maxHearts = 10;
+        function createHeart() {
+            if (heartCount >= maxHearts) return;
+            heartCount++;
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            const colors = ["❤️","💛","💜","💚","💙","🧡"];
+            heart.innerHTML = colors[Math.floor(Math.random()*colors.length)];
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.fontSize = Math.random() * 20 + 20 + "px";
+            document.body.appendChild(heart);
+            setTimeout(() => {
+                heart.remove();
+                heartCount--;
+            }, 6000);
+        }
+
+        function playMusic() {
+            const music = document.getElementById("loveMusic");
+            music.volume = 0.5;
+            music.play();
+            document.getElementById("startMusicBtn").style.display = "none";
+        }
+
+        function typeMessage(message, elementId, speed = 50) {
+            let i = 0;
+            const element = document.getElementById(elementId);
+            element.innerHTML = "";
+            function typing() {
+                if (i < message.length) {
+                    element.innerHTML += message.charAt(i);
+                    i++;
+                    setTimeout(typing, speed);
+                }
+            }
+            typing();
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const loveMessage = urlParams.get("love");
+
+        if (loveMessage) {
+            document.getElementById("mainContainer").style.display = "none";
+            document.getElementById("loveContainer").style.display = "block";
+            setInterval(createHeart, 500);
+            const music = document.getElementById("loveMusic");
+            music.volume = 0.5;
+            music.play().catch(() => {
+                document.getElementById("startMusicBtn").style.display = "inline-block";
+            });
+            typeMessage(decodeURIComponent(loveMessage), "loveMessage", 50);
+        }
+    </script>
+</body>
+</html>

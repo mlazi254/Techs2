@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Symoh VCF Collector</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', system-ui, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background: linear-gradient(120deg, #0f2027 0%, #2c5364 100%);
+      position: relative;
+    }
+    .bg-animated {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bg-animated span {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.18;
+      filter: blur(8px);
+      animation: moveBg 20s linear infinite;
+      background: radial-gradient(circle at 30% 30%, #0ff, #09f, transparent 60%);
+    }
+    .bg-animated .b1 { width: 480px; height: 480px; left: 10vw; top: 6vh; animation-delay: 0s;}
+    .bg-animated .b2 { width: 400px; height: 400px; left: 65vw; top: 40vh; animation-delay: 7s;}
+    .bg-animated .b3 { width: 380px; height: 380px; left: 45vw; top: 58vh; animation-delay: 13s;}
+    @keyframes moveBg {
+      0% { transform: scale(1) translateY(0);}
+      50% { transform: scale(1.25) translateY(-60px);}
+      100% { transform: scale(1) translateY(0);}
+    }
+    .container {
+      max-width: 400px;
+      margin: 4rem auto;
+      background: rgba(25,30,45,0.93);
+      border-radius: 16px;
+      box-shadow: 0 0 32px #0ff3, 0 0 4px #09f8;
+      padding: 2.2rem 2rem 2.6rem 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      border: 2px solid #0ff7;
+      backdrop-filter: blur(3px);
+    }
+    h2 {
+      color: #0ff;
+      text-shadow: 0 0 8px #0ff8, 0 0 30px #09f8;
+      margin-bottom: 0.7rem;
+      letter-spacing: 3px;
+      font-weight: 700;
+      font-size: 2.1rem;
+      animation: glowTitle 1.6s infinite alternate;
+    }
+    @keyframes glowTitle {
+      from { text-shadow: 0 0 8px #0ff8, 0 0 30px #09f8;}
+      to   { text-shadow: 0 0 18px #0ff, 0 0 40px #0ff; }
+    }
+    .count-status {
+      margin-bottom: 1.3rem;
+      display: flex;
+      justify-content: space-between;
+      color: #0ff;
+      text-shadow: 0 0 4px #0ff7;
+      font-size: 1.11rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #0ff3;
+      padding-bottom: 0.3rem;
+      margin-top: 0.4rem;
+      animation: statusGlow 2s infinite alternate;
+    }
+    @keyframes statusGlow {
+      from { text-shadow: 0 0 4px #0ff7; }
+      to   { text-shadow: 0 0 12px #0ff7; }
+    }
+    label {
+      display: block;
+      margin: 1.2rem 0 0.5rem 0;
+      font-weight: 700;
+      color: #0ff;
+      text-shadow: 0 0 4px #0ff7;
+      letter-spacing: 1px;
+    }
+    input[type="text"], input[type="tel"] {
+      width: 92%;
+      padding: 0.7rem 1rem;
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+      border: 1.5px solid #0ff6;
+      border-radius: 8px;
+      background: rgba(30,40,60,0.87);
+      color: #fff;
+      outline: none;
+      box-shadow: 0 0 10px #09f3;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    input[type="text"]:focus, input[type="tel"]:focus {
+      border: 1.5px solid #fff;
+      box-shadow: 0 0 18px #0ff9;
+      background: rgba(30,40,80,0.93);
+    }
+    button {
+      padding: 0.7rem 2.2rem;
+      font-size: 1.15rem;
+      background: linear-gradient(90deg, #09f 40%, #0ff 100%);
+      color: #001a2e;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1rem;
+      letter-spacing: 1px;
+      box-shadow: 0 0 16px #0ff7;
+      text-shadow: 0 0 3px #fff8;
+      transition: background 0.22s, box-shadow 0.22s;
+      outline: none;
+    }
+    button:active {
+      background: linear-gradient(90deg, #0ff 10%, #09f 80%);
+      box-shadow: 0 0 20px #0ffb;
+    }
+    .note {
+      color: #0ff;
+      margin: 1.1rem 0 0.6rem 0;
+      font-size: 1.04rem;
+      text-shadow: 0 0 4px #0ff5;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    .success, .error {
+      margin-top: 1.2rem;
+      font-weight: bold;
+      font-size: 1.07rem;
+      letter-spacing: 0.6px;
+    }
+    .success {
+      color: #00ffd0;
+      text-shadow: 0 0 8px #0ff7;
+      animation: successGlow 1.6s infinite alternate;
+    }
+    .error {
+      color: #ff487a;
+      text-shadow: 0 0 10px #ff487a77;
+      animation: errorGlow 1.4s infinite alternate;
+    }
+    @keyframes successGlow {
+      from { text-shadow: 0 0 8px #0ff7;}
+      to   { text-shadow: 0 0 24px #0ff;}
+    }
+    @keyframes errorGlow {
+      from { text-shadow: 0 0 10px #ff487a77;}
+      to   { text-shadow: 0 0 24px #ff487a;}
+    }
+    #redirecting {
+      display: none;
+      margin-top: 1.5rem;
+      color: #0ff;
+      font-weight: bold;
+      font-size: 1.17rem;
+      text-shadow: 0 0 10px #0ff7;
+      letter-spacing: 1px;
+      animation: successGlow 1.6s infinite alternate;
+    }
+    /* Download VCF glowing button */
+    #downloadVCF {
+      display: none;
+      margin: 2rem auto 1rem auto;
+      padding: 1rem 2.7rem;
+      font-size: 1.18rem;
+      font-weight: bold;
+      color: #0ff;
+      background: linear-gradient(90deg, #09f 40%, #0ff 100%);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 22px #0ff8, 0 0 6px #09f9;
+      text-shadow: 0 0 12px #fff9;
+      letter-spacing: 1.6px;
+      transition: background 0.22s, box-shadow 0.22s;
+      outline: none;
+      animation: glowTitle 1.3s infinite alternate;
+    }
+    #downloadVCF:active {
+      background: linear-gradient(90deg, #0ff 10%, #09f 80%);
+      box-shadow: 0 0 28px #0ffb;
+    }
+    /* --- Menu overlay styles --- */
+    .menu-btn {
+      position: fixed;
+      top: 26px;
+      right: 32px;
+      z-index: 1101;
+      background: linear-gradient(120deg, #0ff 60%, #09f 100%);
+      color: #002034;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 2px 16px #0ff8, 0 0 2px #09f8;
+      transition: background 0.22s;
+      outline: none;
+      animation: glowMenu 2s infinite alternate;
+    }
+    @keyframes glowMenu {
+      from { box-shadow: 0 2px 12px #0ff4;}
+      to { box-shadow: 0 2px 22px #0ff8;}
+    }
+    .menu-btn:active {
+      background: linear-gradient(120deg, #09f 20%, #0ff 80%);
+    }
+    .menu-overlay {
+      display: none;
+      position: fixed;
+      top: 0; right: 0; bottom: 0; left: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 1200;
+      animation: fadeIn 0.22s;
+    }
+    @keyframes fadeIn {
+      from { background: rgba(0,0,0,0);}
+      to   { background: rgba(0,0,0,0.75);}
+    }
+    .menu-content {
+      position: fixed;
+      top: 0; right: 0;
+      width: 258px;
+      height: 100%;
+      background: rgba(23, 34, 48, 0.97);
+      border-left: 3px solid #0ff7;
+      box-shadow: -4px 0 32px #0ff4;
+      padding: 2.3rem 1.5rem 1rem 1.7rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      z-index: 1202;
+      animation: slideIn 0.28s;
+    }
+    @keyframes slideIn {
+      from { right: -300px; }
+      to { right: 0; }
+    }
+    .menu-content h3 {
+      margin: 0 0 1.5rem 0;
+      font-size: 1.2rem;
+      color: #0ff;
+      text-shadow: 0 0 7px #0ff8;
+      letter-spacing: 2px;
+    }
+    .menu-content a {
+      font-size: 1.11rem;
+      margin-bottom: 1.25rem;
+      color: #0ff;
+      text-decoration: none;
+      transition: color 0.2s, text-shadow 0.2s;
+      font-weight: bold;
+      text-shadow: 0 0 5px #0ff7;
+      letter-spacing: 1px;
+      display: block;
+    }
+    .menu-content a:hover {
+      color: #09f;
+      text-shadow: 0 0 13px #0ffb, 0 0 4px #09f7;
+      text-decoration: underline;
+    }
+    .menu-close {
+      position: absolute;
+      top: 13px;
+      right: 21px;
+      font-size: 1.6rem;
+      color: #0ff;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-shadow: 0 0 7px #0ffb;
+    }
+    @media (max-width: 540px) {
+      .container {
+        max-width: 97vw;
+        padding: 1.1rem 0.6rem 2rem 0.6rem;
+        border-radius: 8px;
+      }
+      .menu-content {
+        width: 90vw;
+        min-width: 0;
+        padding: 1.4rem 0.8rem 1rem 1.1rem;
+      }
+      .menu-btn { top: 12px; right: 12px;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Techy Background -->
+  <div class="bg-animated">
+    <span class="b1"></span>
+    <span class="b2"></span>
+    <span class="b3"></span>
+  </div>
+  <!-- Menu Overlay -->
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu">&#9776;</button>
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-content">
+      <button class="menu-close" id="menuCloseBtn" aria-label="Close menu">&times;</button>
+      <h3>Quick Links</h3>
+      <a href="https://symohcontacts.vercel.app" target="_blank">Visit our website</a>
+      <a href="https://t.me/symohbot" target="_blank">Telegram: </a>
+    </div>
+  </div>
+  <!-- Main Card -->
+  <div class="container">
+    <h2>Symoh VCF Collector</h2>
+    <div class="count-status" id="countStatus">
+      <span id="uploadsCount">Uploads: 190</span>
+      <span id="remainingCount">Remaining: 10</span>
+    </div>
+    <form id="userForm" autocomplete="off">
+      <label for="name">Name</label>
+      <input type="text" id="name" maxlength="40" required placeholder="Enter your name" autocomplete="off"/>
+      <label for="number">WhatsApp Number</label>
+      <input type="tel" id="number" maxlength="15" required placeholder="e.g. +254712345678" autocomplete="off"/>
+      <button type="submit">Submit</button>
+    </form>
+    <div class="note">
+      After you submit, you will be verified and directed to our WhatsApp group where you will get the vcf ready to import after limit has reached.
+    </div>
+    <button id="downloadVCF">Download symoh.vcf</button>
+    <div class="success" id="success"></div>
+    <div class="error" id="error"></div>
+    <div id="redirecting">
+      You have been verified. Please wait to be directed to WhatsApp group...
+    </div>
+  </div>
+  <script>
+    // Menu overlay logic
+    const menuBtn = document.getElementById('menuBtn');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menuCloseBtn = document.getElementById('menuCloseBtn');
+
+    menuBtn.onclick = () => {
+      menuOverlay.style.display = "block";
+      document.body.style.overflow = "hidden";
+    };
+    menuOverlay.onclick = (e) => {
+      if (e.target === menuOverlay) {
+        menuOverlay.style.display = "none";
+        document.body.style.overflow = "";
+      }
+    };
+    menuCloseBtn.onclick = () => {
+      menuOverlay.style.display = "none";
+      document.body.style.overflow = "";
+    };
+
+    // Submission logic (localStorage demo)
+    const GROUP_LINK = "https://chat.whatsapp.com/EqvKvuBMxhsIg3VNajBcou?mode=ems_copy_t";
+    const LIMIT = 200;
+
+    function updateCounts() {
+      let contacts = JSON.parse(localStorage.getItem('symoh_contacts') || '[]');
+      let uploads = contacts.length;
+      let remaining = Math.max(0, LIMIT - uploads);
+      document.getElementById('uploadsCount').textContent = "Uploads: " + uploads;
+      document.getElementById('remainingCount').textContent = "Remaining: " + remaining;
+      // Show/hide download button
+      document.getElementById('downloadVCF').style.display = (uploads >= LIMIT) ? "" : "none";
+      // Hide form when limit reached
+      document.getElementById('userForm').style.display = (uploads >= LIMIT) ? "none" : "";
+      // Hide note and error/success if limit reached
+      if (uploads >= LIMIT) {
+        document.getElementById('success').textContent = '';
+        document.getElementById('error').textContent = '';
+        document.getElementById('redirecting').style.display = "none";
+      }
+    }
+
+    // Call on page load
+    updateCounts();
+
+    document.getElementById('userForm').onsubmit = function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const number = document.getElementById('number').value.trim();
+      const successDiv = document.getElementById('success');
+      const errorDiv = document.getElementById('error');
+      const redirectingDiv = document.getElementById('redirecting');
+      successDiv.textContent = '';
+      errorDiv.textContent = '';
+      redirectingDiv.style.display = "none";
+
+      let contacts = JSON.parse(localStorage.getItem('symoh_contacts') || '[]');
+      if (contacts.length >= LIMIT) {
+        errorDiv.textContent = "The upload limit has been reached. Please download the VCF file.";
+        updateCounts();
+        return;
+      }
+
+      if (!name || !number.match(/^\+?\d{10,15}$/)) {
+        errorDiv.textContent = "Enter a valid name and WhatsApp number (e.g. +254712345678)";
+        return;
+      }
+      if (contacts.some(c => c.number === number)) {
+        errorDiv.textContent = "This WhatsApp number has already been submitted.";
+        return;
+      }
+      contacts.push({name, number});
+      localStorage.setItem('symoh_contacts', JSON.stringify(contacts));
+      updateCounts();
+      successDiv.textContent = '';
+      errorDiv.textContent = '';
+      redirectingDiv.style.display = "";
+      setTimeout(() => {
+        window.location.href = GROUP_LINK;
+      }, 1700);
+      document.getElementById('userForm').reset();
+    };
+
+    // Download VCF logic
+    document.getElementById('downloadVCF').onclick = function() {
+      let contacts = JSON.parse(localStorage.getItem('symoh_contacts') || '[]');
+      if (contacts.length < LIMIT) return;
+      let vcf = contacts.map(c =>
+        `BEGIN:VCARD\nVERSION:3.0\nFN:${c.name}\nTEL;TYPE=CELL:${c.number}\nEND:VCARD`
+      ).join('\n');
+      let blob = new Blob([vcf], {type: 'text/vcard'});
+      let url = URL.createObjectURL(blob);
+      let a = document.createElement('a');
+      a.href = url;
+      a.download = "symoh.vcf";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }, 500);
+    };
+  </script>
+</body>
+</html>

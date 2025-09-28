@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SYMOH Tech contact page with links to social media">
+  <title>SYMOH Tech Contacts</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      color: #fff;
+      padding-bottom: 60px;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      color: #00f0ff;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      padding: 15px 0;
+      display: flex;
+      justify-content: space-around;
+      z-index: 1000;
+      text-shadow: 0 0 8px #00f0ff, 0 0 15px #00f0ff;
+    }
+
+    .container {
+      max-width: 350px;
+      width: 100%;
+      text-align: center;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      overflow-y: auto;
+      max-height: 80vh;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 90px;
+      color: #333;
+    }
+
+    /* Profile Picture */
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 15px;
+      box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+      animation: glowButton 2s infinite alternate;
+      display: block;
+    }
+
+    h1 {
+      color: #fff;
+      margin-bottom: 20px;
+      font-weight: 500;
+      text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 30px #00f0ff;
+      animation: glowTitle 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowTitle {
+      from { text-shadow: 0 0 5px #00f0ff, 0 0 10px #00f0ff; }
+      to { text-shadow: 0 0 20px #00f0ff, 0 0 40px #00f0ff; }
+    }
+
+    .button {
+      display: block;
+      width: 85%;
+      padding: 8px;
+      margin: 10px auto;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards, glowButton 2s infinite alternate;
+      animation-delay: calc(0.1s * var(--i));
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glowButton {
+      from { box-shadow: 0 0 5px #00f0ff; }
+      to { box-shadow: 0 0 15px #00f0ff, 0 0 25px #00f0ff; }
+    }
+
+    .button:hover {
+      transform: scale(1.05);
+    }
+
+    /* Colors */
+    .whatsapp { background-color: #25D366; }
+    .github { background-color: #24292e; }
+    .website { background-color: #6c757d; }
+    .telegram { background-color: #0088cc; }
+    .instagram { background-color: #E1306C; }
+    .facebook { background-color: #1877F2; }
+    .spotify { background-color: #1DB954; }
+    .youtube { background-color: #FF0000; }
+    .email { background-color: #dc3545; }
+    .app { background-color: #17a2b8; }
+    .shop { background-color: #ff6f61; }
+    .gallery { background-color: #6b7280; }
+    .coffee { background-color: #ff9900; }
+    .sociabuzz { background-color: #9b59b6; }
+    .business { background-color: #25D366; } /* Matches WhatsApp */
+    .whatsapp-bot { background-color: #25D366; } /* Matches WhatsApp */
+    .other-contacts { background-color: #6c757d; } /* Matches website */
+    .love-message { background-color: #ff69b4; } /* Pink for love message */
+    .menu-button { background-color: #00f0ff; } /* Matches neon theme */
+
+    /* Audio Player */
+    .audio-player {
+      margin: 20px auto;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 8px;
+      box-shadow: 0 0 10px #00f0ff;
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards;
+      animation-delay: 1.5s;
+    }
+
+    audio {
+      width: 100%;
+      outline: none;
+    }
+
+    .audio-credit {
+      font-size: 12px;
+      color: #fff;
+      margin-top: 10px;
+      text-align: center;
+      text-shadow: 0 0 5px #00f0ff;
+    }
+
+    .audio-credit a {
+      color: #00f0ff;
+      text-decoration: none;
+    }
+
+    .audio-credit a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    .footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 14px;
+      color: #fff;
+      font-weight: 500;
+      text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+      animation: glowFooter 2s infinite alternate;
+    }
+
+    @keyframes glowFooter {
+      from { text-shadow: 0 0 5px #00f0ff; }
+      to { text-shadow: 0 0 15px #00f0ff, 0 0 30px #00f0ff; }
+    }
+
+    /* Menu Overlay */
+    .menu-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .menu-content {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00f0ff;
+      max-width: 300px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 5px #00f0ff;
+      transition: transform 0.3s ease;
+    }
+
+    .close-button:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div id="date">📅 Date: --/--/----</div>
+    <div id="time">⌚ Time: --:--:--</div>
+    <div id="battery">🔋 Battery: --%</div>
+  </div>
+
+  <div class="container">
+    <!-- Profile Picture -->
+    <img src="https://files.catbox.moe/aa4auc.jpg" alt="SYMOH Tech Profile Picture" class="profile-pic">
+
+    <h1>SYMOH Tech Contacts</h1>
+
+    <!-- Menu Button -->
+    <button class="button menu-button" style="--i:0;" onclick="toggleMenu()" aria-label="Open Menu">Menu</button>
+
+    <a href="https://wa.me/+254115490569" class="button whatsapp" style="--i:1;" aria-label="Contact via WhatsApp" rel="noopener noreferrer">WhatsApp</a>
+    <a href="https://github.com/chazywayne" class="button github" style="--i:2;" aria-label="Visit GitHub Profile 1" rel="noopener noreferrer">GitHub 1</a>
+    <a href="https://github.com/symo2" class="button github" style="--i:3;" aria-label="Visit GitHub Profile 2" rel="noopener noreferrer">GitHub 2</a>
+    <a href="https://symoh.com" class="button website" style="--i:4;" aria-label="Visit Website 1" rel="noopener noreferrer">Website 1</a>
+    <a href="https://symoh.netlify.app" class="button website" style="--i:5;" aria-label="Visit Website 2" rel="noopener noreferrer">Website 2</a>
+    <a href="https://t.me/symohbot" class="button telegram" style="--i:6;" aria-label="Visit Telegram Bot" rel="noopener noreferrer">Telegram Bot</a>
+    <a href="https://t.me/symohbot" class="button telegram" style="--i:7;" aria-label="Contact via Telegram" rel="noopener noreferrer">Telegram</a>
+    <a href="https://whatsapp.com/channel/0029VbB6vPOBKfhyq51mBH0a" class="button whatsapp" style="--i:8;" aria-label="Join WhatsApp Channel" rel="noopener noreferrer">WhatsApp Channel</a>
+    <a href="https://wa.me/+254789962471" class="button whatsapp" style="--i:9;" aria-label="Contact via WhatsApp 2" rel="noopener noreferrer">WhatsApp 2</a>
+    <a href="https://www.instagram.com/symohke2" class="button instagram" style="--i:10;" aria-label="Visit Instagram Profile" rel="noopener noreferrer">Instagram</a>
+    <a href="https://www.facebook.com/techsymoh" class="button facebook" style="--i:11;" aria-label="Visit Facebook Page" rel="noopener noreferrer">Facebook</a>
+    <a href="https://open.spotify.com/user/SYMOHCHEGE" class="button spotify" style="--i:12;" aria-label="Visit Spotify Profile" rel="noopener noreferrer">Spotify</a>
+    <a href="https://www.youtube.com/@techsymoh" class="button youtube" style="--i:13;" aria-label="Visit YouTube Channel" rel="noopener noreferrer">YouTube</a>
+    <a href="/cdn-cgi/l/email-protection#6e0f0a0307002e0d171e060b1c16401d1e0f0d0b" class="button email" style="--i:14;" aria-label="Send Email" rel="noopener noreferrer">Email</a>
+    <a href="https://warehouse.appilix.com/uploads/app-apk-68a730a441465-1755787428.apk" class="button app" style="--i:15;" aria-label="Download SYMOH Tech App" rel="noopener noreferrer">Download Our App</a>
+    <a href="https://symohshop.vercel.app" class="button shop" style="--i:16;" aria-label="Shop with us at SYMOH Shop" rel="noopener noreferrer">Shop with us</a>
+    <a href="https://simoh.netlify.app" class="button gallery" style="--i:17;" aria-label="Visit Our Gallery" rel="noopener noreferrer">Our Gallery</a>
+    <a href="https://ko-fi.com/symoh" class="button coffee" style="--i:18;" aria-label="Buy us a coffee" rel="noopener noreferrer">Buy us a coffee</a>
+    <a href="https://sociabuzz.com/SYMOH" class="button sociabuzz" style="--i:19;" aria-label="Visit Sociabuzz Profile" rel="noopener noreferrer">Sociabuzz</a>
+
+    <!-- Audio Player -->
+    <div class="audio-player">
+      <audio controls aria-label="Play UFO by Rameses B">
+        <source src="https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/001/640/ufo-1709254860-vWsaPJnkl4.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+      <p class="audio-credit">
+        Music: <a href="https://ncs.io/track/download/e86dc497-874b-4f77-8b24-81635cf60f0c" target="_blank" rel="noopener">UFO by Rameses B [NCS Release]</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Menu Overlay -->
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-content">
+      <button class="close-button" onclick="toggleMenu()" aria-label="Close Menu">✖</button>
+      <h2 style="color: #333; margin-bottom: 20px;">More Options</h2>
+      <a href="https://symohshop.vercel.app" class="button shop" style="--i:1;" aria-label="Shop with us at SYMOH Shop" rel="noopener noreferrer">Shop with us</a>
+      <a href="https://wa.me/254788729180" class="button business" style="--i:2;" aria-label="Business Chat via WhatsApp" rel="noopener noreferrer">Business Chat</a>
+      <a href="https://wa.me/254788729180" class="button whatsapp-bot" style="--i:3;" aria-label="Get WhatsApp Bot" rel="noopener noreferrer">Get WhatsApp Bot</a>
+      <a href="https://s3c6.netlify.app" class="button other-contacts" style="--i:4;" aria-label="Visit Other Contacts" rel="noopener noreferrer">Other Contacts</a>
+      <a href="https://love2-eight.vercel.app/" class="button love-message" style="--i:5;" aria-label="Generate Love Message" rel="noopener noreferrer">Generate Love Message</a>
+    </div>
+  </div>
+
+  <div class="footer">✨ Created by Symoh ✨</div>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Time & Date
+    function updateDateTime() {
+      const now = new Date();
+      document.getElementById('time').textContent = "⌚ Time: " + now.toLocaleTimeString();
+      document.getElementById('date').textContent = "📅 Date: " + now.toLocaleDateString();
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    // Battery
+    if (navigator.getBattery) {
+      navigator.getBattery().then(function(battery) {
+        function updateBattery() {
+          const level = Math.round(battery.level * 100);
+          const status = battery.charging ? "(Charging)" : "";
+          document.getElementById('battery').textContent = `🔋 Battery: ${level}% ${status}`;
+        }
+        updateBattery();
+        battery.addEventListener('levelchange', updateBattery);
+        battery.addEventListener('chargingchange', updateBattery);
+      }).catch(function() {
+        document.getElementById('battery').textContent = '🔋 Battery: N/A';
+      });
+    } else {
+      document.getElementById('battery').textContent = '🔋 Battery: N/A';
+    }
+
+    // Menu Toggle
+    function toggleMenu() {
+      const menu = document.getElementById('menuOverlay');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
+</body>
+</html>
