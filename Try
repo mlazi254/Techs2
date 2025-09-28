@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYMOH Tech - How It Works</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #0a0a0a; color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+        .header { text-align: center; margin-bottom: 50px; }
+        .header h1 { font-size: 3em; color: #00ff88; text-shadow: 0 0 10px #00ff88; }
+        .animation-container { text-align: center; font-size: 2em; margin: 50px 0; min-height: 100px; opacity: 0; transition: opacity 0.5s ease-in-out; }
+        .animation-container.visible { opacity: 1; }
+        .explanation-text { margin: 20px 0; padding: 20px; background: rgba(0, 255, 136, 0.1); border-radius: 10px; border: 1px solid #00ff88; }
+        .images-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 50px; width: 80%; }
+        .tech-image { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 255, 136, 0.3); }
+        .image-caption { text-align: center; margin-top: 10px; font-size: 0.8em; color: #888; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>SYMOH Tech</h1>
+        <p>Building Your Digital Presence</p>
+    </div>
+    <div class="animation-container" id="animation">
+        <div class="explanation-text" id="text"></div>
+    </div>
+    <div class="images-grid">
+        <div><img src="https://source.unsplash.com/random/300x200/?circuit,tech" alt="Tech Circuit" class="tech-image"><p class="image-caption">Advanced Circuitry</p></div>
+        <div><img src="https://source.unsplash.com/random/300x200/?code,programming" alt="Coding" class="tech-image"><p class="image-caption">Software Dev</p></div>
+        <div><img src="https://source.unsplash.com/random/300x200/?network,tech" alt="Network" class="tech-image"><p class="image-caption">Networking</p></div>
+        <div><img src="https://source.unsplash.com/random/300x200/?web,design" alt="Web Design" class="tech-image"><p class="image-caption">Web Builds</p></div>
+    </div>
+    <script>
+        const explanations = [
+            "SYMOH Tech starts with designing attractive websites to build your online presence.",
+            "We create robust eCommerce stores for seamless online shopping experiences.",
+            "Tailored software applications for schools, accounting, and dental management.",
+            "Affordable hardware solutions including desktops, laptops, and accessories.",
+            "Comprehensive networking with expert consulting for your organization.",
+            "Our technical team guides and supports every step of implementation."
+        ];
+        const container = document.getElementById('animation');
+        const textElement = document.getElementById('text');
+        let index = 0;
+        function showNextExplanation() {
+            container.classList.remove('visible');
+            setTimeout(() => {
+                textElement.textContent = explanations[index];
+                container.classList.add('visible');
+                index = (index + 1) % explanations.length;
+            }, 500);
+        }
+        showNextExplanation();
+        setInterval(showNextExplanation, 4000);
+    </script>
+</body>
+</html>
